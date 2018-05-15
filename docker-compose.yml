@@ -1,0 +1,146 @@
+version: '3'
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+    networks:
+      spring_cloud:
+        aliases:
+          - elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.watcher.enabled=false
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
+      - discovery.zen.minimum_master_nodes=1
+      - discovery.type=single-node
+      - transport.host=elasticsearch
+      - http.host=elasticsearch
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:5.5.1
+    networks:
+      spring_cloud:
+        aliases:
+          - kibana
+    restart: always
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
+  logstash:
+    container_name: logstash
+    image: logstash:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - logstash
+    restart: always
+    command:
+      logstash -e 'input { tcp { port => 5000 codec => "json" } } output { elasticsearch { hosts => ["elasticsearch"] index => "micro-%{serviceName}"} }'
+    depends_on:
+      - elasticsearch
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - zipkin
+    ports:
+      - "9411:9411"
+    environment:
+#      - STORAGE_PORT_9200_TCP_ADDR=elasticsearch
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=http://elasticsearch:9200
+    restart: on-failure:3
+    depends_on:
+      - elasticsearch
+
+  discovery-service:
+    container_name: discovery-service
+    image: discovery-service:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - discovery-service
+    environment:
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    depends_on:
+      - elasticsearch
+
+  gateway-service:
+    container_name: gateway-service
+    image: gateway-service:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - gateway-service
+    ports:
+      - "8765:8765"
+    restart: on-failure:3
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    depends_on:
+      - discovery-service
+
+  admin:
+    container_name: admin
+    image: admin:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - admin
+    ports:
+      - "8787:8787"
+    restart: on-failure:3
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    depends_on:
+      - discovery-service
+      - zipkin
+
+  customer-service:
+    container_name: customer-service
+    image: customer-service:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - customer-service
+    restart: on-failure:3
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    depends_on:
+      - discovery-service
+
+  account-service:
+    container_name: account-service
+    image: account-service:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - customer-service
+    restart: on-failure:3
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
+      - JAVA_OPTS=-Xms128m -Xmx256m
+    depends_on:
+      - discovery-service
+
+networks:
+  spring_cloud:
+    external:
+      name: spring_cloud

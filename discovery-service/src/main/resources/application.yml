@@ -1,0 +1,20 @@
+server:  
+  port: ${PORT:8761}
+    
+eureka:  
+  instance:
+    hostname: localhost
+    health-check-url-path: /actuator/health
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+
+  server:
+    enableSelfPreservation: false
+  dashboard:
+    enabled: false
+security:
+  user:
+    name: user
+    password: password
+
