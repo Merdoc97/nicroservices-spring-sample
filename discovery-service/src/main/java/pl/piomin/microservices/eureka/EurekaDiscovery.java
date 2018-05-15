@@ -8,7 +8,6 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableEurekaServer
-//@EnableAdminServer
 public class EurekaDiscovery {
 
 	public static void main(String[] args) {

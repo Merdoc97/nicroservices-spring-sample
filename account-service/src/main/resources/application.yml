@@ -7,18 +7,6 @@ server:
 spring:  
   application:
     name: account-service
-#  sleuth configuration
-#  zipkin:
-#    compression:
-#      enabled: true
-#
-#    sender:
-#      type: web
-#    service:
-#      name: ${spring.application.name}
-#    locator:
-#      discovery:
-#        enabled: true
 eureka:  
   client:
     serviceUrl:

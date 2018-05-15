@@ -60,7 +60,6 @@ services:
     ports:
       - "9411:9411"
     environment:
-#      - STORAGE_PORT_9200_TCP_ADDR=elasticsearch
       - STORAGE_TYPE=elasticsearch
       - ES_HOSTS=http://elasticsearch:9200
     restart: on-failure:3
