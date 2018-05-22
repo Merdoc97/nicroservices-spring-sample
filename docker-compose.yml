@@ -50,22 +50,6 @@ services:
     depends_on:
       - elasticsearch
 
-  zipkin:
-    container_name: zipkin
-    image: openzipkin/zipkin:latest
-    networks:
-      spring_cloud:
-        aliases:
-          - zipkin
-    ports:
-      - "9411:9411"
-    environment:
-      - STORAGE_TYPE=elasticsearch
-      - ES_HOSTS=http://elasticsearch:9200
-    restart: on-failure:3
-    depends_on:
-      - elasticsearch
-
   discovery-service:
     container_name: discovery-service
     image: discovery-service:latest
@@ -90,7 +74,7 @@ services:
     restart: on-failure:3
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
-      - JAVA_OPTS=-Xms128m -Xmx256m
+      - JAVA_OPTS=-Xms512m -Xmx512m
     depends_on:
       - discovery-service
 
@@ -106,10 +90,10 @@ services:
     restart: on-failure:3
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
-      - JAVA_OPTS=-Xms128m -Xmx256m
+      - JAVA_OPTS=-Xms512m -Xmx512m
     depends_on:
       - discovery-service
-      - zipkin
+      - gateway-service
 
   customer-service:
     container_name: customer-service
@@ -121,7 +105,7 @@ services:
     restart: on-failure:3
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
-      - JAVA_OPTS=-Xms128m -Xmx256m
+      - JAVA_OPTS=-Xms512m -Xmx512m
     depends_on:
       - discovery-service
 
@@ -135,9 +119,10 @@ services:
     restart: on-failure:3
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
-      - JAVA_OPTS=-Xms128m -Xmx256m
+      - JAVA_OPTS=-Xms512m -Xmx512m
     depends_on:
       - discovery-service
+
 
 networks:
   spring_cloud:
