@@ -75,6 +75,9 @@ services:
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
       - JAVA_OPTS=-Xms512m -Xmx512m
+      - spring.rabbitmq.host=rabbit
+      - spring.rabbitmq.username=user
+      - spring.rabbitmq.password=admin
     depends_on:
       - discovery-service
 
@@ -123,14 +126,30 @@ services:
     depends_on:
       - discovery-service
   turbine:
-    image: schibstedspain/turbine-hystrix-dashboard:latest
+    image: turbine-service:latest
     networks:
       spring_cloud:
         aliases:
-          - turbine
+          - turbine-service
     environment:
-      - CLOUD_EUREKA=http://discovery-service:8761/eureka/
-      - SERVICES=account-service,customer-service,gateway-service
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
+      - spring.rabbitmq.host=rabbit
+      - spring.rabbitmq.username=user
+      - spring.rabbitmq.password=admin
+    depends_on:
+      - discovery-service
+
+  rabbit:
+    image: rabbitmq:3.7-management
+    networks:
+      spring_cloud:
+        aliases:
+          - rabbit
+    ports:
+        - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
       - discovery-service
 networks:

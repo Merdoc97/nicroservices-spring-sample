@@ -11,12 +11,10 @@ spring:
     host: localhost
     username: guest
     password: admin
-eureka:  
+eureka:
   client:
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
   instance:
     non-secure-port: 8081
-    statusPageUrlPath: /info
-    metadata-map:
-       management.context-path: /
+

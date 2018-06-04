@@ -32,18 +32,16 @@
 				<version>${docker-plugin-version}</version>
 				<configuration>
 					<imageName>${project.build.finalName}:latest</imageName>
-					<dockerDirectory>turbine-service/docker</dockerDirectory>
+					<dockerDirectory>turbine/docker</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
-							<directory>turbine-service/target</directory>
+							<directory>turbine/target</directory>
 							<include>${project.build.finalName}.jar</include>
 						</resource>
 					</resources>
 				</configuration>
 			</plugin>
-
-
 		</plugins>
 	</build>
 

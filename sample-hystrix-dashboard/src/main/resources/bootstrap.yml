@@ -1,9 +1,0 @@
----
-spring:
-  application:
-    name: sample-hystrix-dashboard
-  cloud:
-    config:
-      enabled: false
-    discovery:
-      enabled: false
