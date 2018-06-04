@@ -1,0 +1,22 @@
+info:
+  component: ${spring.application.name}
+
+server:
+  port: ${PORT:8081}
+
+spring:  
+  application:
+    name: turbine-service
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: admin
+eureka:  
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+  instance:
+    non-secure-port: 8081
+    statusPageUrlPath: /info
+    metadata-map:
+       management.context-path: /

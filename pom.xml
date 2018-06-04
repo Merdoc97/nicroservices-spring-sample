@@ -10,9 +10,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.12.RELEASE</version>
+        <version>1.5.13.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -31,11 +32,13 @@
     </properties>
 
     <modules>
+        <module>sample-hystrix-dashboard</module>
         <module>discovery-service</module>
         <module>account-service</module>
         <module>gateway-service</module>
         <module>customer-service</module>
         <module>admin-dashboard</module>
+        <module>turbine</module>
     </modules>
 
     <dependencies>

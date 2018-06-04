@@ -8,11 +8,11 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
-
   server:
     enableSelfPreservation: false
   dashboard:
     enabled: false
+
 security:
   user:
     name: user

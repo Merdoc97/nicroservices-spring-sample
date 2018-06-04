@@ -9,7 +9,6 @@ endpoints:
   health:
     sensitive: false
 
-
 zuul:
   prefix: /api
   routes:
@@ -68,6 +67,12 @@ security:
 feign:
   hystrix:
     enabled: true
+
+spring:
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: admin
 
 
 

@@ -122,8 +122,17 @@ services:
       - JAVA_OPTS=-Xms512m -Xmx512m
     depends_on:
       - discovery-service
-
-
+  turbine:
+    image: schibstedspain/turbine-hystrix-dashboard:latest
+    networks:
+      spring_cloud:
+        aliases:
+          - turbine
+    environment:
+      - CLOUD_EUREKA=http://discovery-service:8761/eureka/
+      - SERVICES=account-service,customer-service,gateway-service
+    depends_on:
+      - discovery-service
 networks:
   spring_cloud:
     external:
