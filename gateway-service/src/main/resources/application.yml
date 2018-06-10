@@ -35,6 +35,7 @@ eureka:
        user.password: ${security.user.password}
 
   client:
+    registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
     registerWithEureka: true
@@ -49,10 +50,19 @@ logging:
 #  file: gateway.log
 
 #actuator example
+
 management:
   security:
     enabled: true
     roles: ACTUATOR
+  endpoints:
+
+    web:
+      exposure:
+#      new feature most enpoints from http layer not allowed
+        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
+      base-path: /actuator
+# deprecated
   context-path: /actuator
 #security for actuator and
 security:

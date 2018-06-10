@@ -4,29 +4,34 @@ server:
 
 eureka:
   client:
+    registryFetchIntervalSeconds: 20
     serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
     registerWithEureka: false
 
   instance:
-    leaseRenewalIntervalInSeconds: 3
-    leaseExpirationDurationInSeconds: 5
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    leaseRenewalIntervalInSeconds: 15
+    leaseExpirationDurationInSeconds: 20
+
 management:
-  security:
-    enabled: false
-security:
-  user:
-    name: user
-    password: password
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
 
 spring:
   boot:
     admin:
-      routes:
-        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,turbine.stream
       turbine:
         clusters: default
         location: turbine-service
+
 
 
 

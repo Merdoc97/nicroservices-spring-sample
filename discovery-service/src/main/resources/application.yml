@@ -5,13 +5,15 @@ eureka:
   instance:
     hostname: localhost
     health-check-url-path: /actuator/health
+    lease-renewal-interval-in-seconds: 5
+    leaseExpirationDurationInSeconds: 5
   client:
     registerWithEureka: false
     fetchRegistry: false
   server:
     enableSelfPreservation: false
   dashboard:
-    enabled: false
+    enabled: true
 
 security:
   user:
@@ -19,3 +21,11 @@ security:
     password: password
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
