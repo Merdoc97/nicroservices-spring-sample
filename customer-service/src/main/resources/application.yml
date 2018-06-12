@@ -21,8 +21,15 @@ ribbon:
 
 management:
   security:
-    enabled: false
-
+    enabled: true
+    roles: ACTUATOR
+  context-path: /actuator
+  endpoints:
+    web:
+      exposure:
+#      new feature most enpoints from http layer not allowed
+        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
+      base-path: /actuator
 hystrix:
   command:
     default:
