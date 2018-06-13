@@ -3,8 +3,10 @@ package pl.piomin.microservices.customer.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piomin.microservices.customer.intercomm.AccountClient;
+import pl.piomin.microservices.customer.intercomm.CustomersTestFeign;
 import pl.piomin.microservices.customer.model.Account;
 import pl.piomin.microservices.customer.model.Customer;
 import pl.piomin.microservices.customer.model.CustomerType;
@@ -18,7 +20,10 @@ public class Api {
 	
 	@Autowired
 	private AccountClient accountClient;
-	
+
+	@Autowired
+	private CustomersTestFeign customersClient;
+
 	protected Logger logger = Logger.getLogger(Api.class.getName());
 	
 	private List<Customer> customers;
@@ -41,6 +46,12 @@ public class Api {
 	public List<Customer> findAll() {
 		logger.info("Customer.findAll()");
 		return customers;
+	}
+
+	@RequestMapping(method = RequestMethod.GET,value = "/customers/test")
+	public List<Customer> getAll() {
+//		test get  from by self
+		return customersClient.getAll();
 	}
 	
 	@RequestMapping("/customers/{id}")
