@@ -7,6 +7,15 @@ spring:
   application:
     name: customer-service
 
+#security for actuator and
+security:
+  user:
+    name: user
+    password: password
+    role: ACTUATOR
+  basic:
+    path: /actuator/**
+
 eureka:
   client:
     serviceUrl:
@@ -14,6 +23,11 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
+    statusPageUrlPath: ${management.context-path}/info
+    metadata-map:
+      management.context-path: /actuator
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
 
 ribbon:
   eureka:
