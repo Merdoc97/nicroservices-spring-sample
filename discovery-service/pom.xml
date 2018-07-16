@@ -13,6 +13,15 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>4.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -23,8 +32,9 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>${docker-plugin-version}</version>
 				<configuration>
-					<imageName>${project.build.finalName}:latest</imageName>
+					<imageName>${project.build.finalName}</imageName>
 					<dockerDirectory>discovery-service/docker</dockerDirectory>
+					<imageTags>v1</imageTags>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>

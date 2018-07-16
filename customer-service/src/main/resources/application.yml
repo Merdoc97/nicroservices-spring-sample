@@ -6,6 +6,10 @@ server:
 spring:
   application:
     name: customer-service
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: admin
 
 eureka:
   client:

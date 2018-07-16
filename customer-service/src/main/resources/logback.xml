@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
-    <property resource="log.properties" />
+    <property resource="log.properties"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread, %X{X-B3-TraceId:-},%X{X-B3-SpanId:-}] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread, %X{X-B3-TraceId:-},%X{X-B3-SpanId:-}] %-5level %logger{36} - %msg%n
+            </pattern>
         </encoder>
     </appender>
-
-    <appender name="STASH"
-              class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${logstash.location}</destination>
-
+    
+    <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
         <encoder
                 class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
@@ -24,7 +22,7 @@
                 <pattern>
                     <pattern>
                         {
-                        "serviceName": "customer-service"
+                        "service": "customer-service"
                         }
                     </pattern>
                 </pattern>
@@ -35,10 +33,25 @@
                 <stackTrace />
             </providers>
         </encoder>
+
+        <!-- RabbitMQ connection -->
+        <host>${rabbit-host}</host>
+        <port>${rabbit-port}</port>
+        <username>${rabbit-username}</username>
+        <password>${rabbit-password}</password>
+        <applicationId>api-service-4</applicationId>
+        <routingKeyPattern>logstash</routingKeyPattern>
+        <declareExchange>true</declareExchange>
+        <exchangeType>direct</exchangeType>
+        <exchangeName>ex_logstash</exchangeName>
+        <generateId>true</generateId>
+        <charset>UTF-8</charset>
+        <durable>true</durable>
+        <deliveryMode>PERSISTENT</deliveryMode>
     </appender>
 
     <root level="info">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="STASH" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="AMQP"/>
     </root>
 </configuration>

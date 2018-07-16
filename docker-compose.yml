@@ -46,7 +46,7 @@ services:
           - logstash
     restart: always
     command:
-      logstash -e 'input { tcp { port => 5000 codec => "json" } } output { elasticsearch { hosts => ["elasticsearch"] index => "micro-%{serviceName}"} }'
+      logstash -e 'input { rabbitmq { host => "rabbit" durable => true exchange => "ex_logstash" user => "guest" password => "admin" heartbeat => 30 queue => "elk"} } output { elasticsearch { hosts =>["elasticsearch"] index => "micro-%{service}"} }'
     depends_on:
       - elasticsearch
 
@@ -59,6 +59,10 @@ services:
           - discovery-service
     environment:
       - JAVA_OPTS=-Xms128m -Xmx256m
+      - rabbit-host=rabbit
+      - rabbit-port=5672
+      - rabbit-username=user
+      - rabbit-password=admin
     depends_on:
       - elasticsearch
 
@@ -78,8 +82,13 @@ services:
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
+      - rabbit-host=rabbit
+      - rabbit-port=5672
+      - rabbit-username=user
+      - rabbit-password=admin
     depends_on:
       - discovery-service
+      - rabbit
 
   admin:
     container_name: admin
@@ -109,8 +118,13 @@ services:
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
       - JAVA_OPTS=-Xms512m -Xmx512m
+      - rabbit-host=rabbit
+      - rabbit-port=5672
+      - rabbit-username=user
+      - rabbit-password=admin
     depends_on:
       - discovery-service
+      - rabbit
 
   account-service:
     container_name: account-service
@@ -123,8 +137,13 @@ services:
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
       - JAVA_OPTS=-Xms512m -Xmx512m
+      - rabbit-host=rabbit
+      - rabbit-port=5672
+      - rabbit-username=user
+      - rabbit-password=admin
     depends_on:
       - discovery-service
+      - rabbit
   turbine:
     image: turbine-service:latest
     networks:

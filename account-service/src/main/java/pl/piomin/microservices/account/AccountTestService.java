@@ -14,7 +14,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class AccountTestService {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(AccountTestService.class, args);
+
 	}
 	
 }

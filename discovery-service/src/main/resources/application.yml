@@ -29,3 +29,10 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
+spring:
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: admin
+
