@@ -46,7 +46,7 @@ services:
           - logstash
     restart: always
     command:
-      logstash -e 'input { rabbitmq { host => "rabbit" durable => true exchange => "ex_logstash" user => "guest" password => "admin" heartbeat => 30 queue => "elk"} } output { elasticsearch { hosts =>["elasticsearch"] index => "micro-%{service}"} }'
+      logstash -e 'input { rabbitmq { host => "rabbit" durable => true exchange => "ex_logstash" user => "user" password => "admin" heartbeat => 30 queue => "elk"} } output { elasticsearch { hosts =>["elasticsearch"] index => "micro-%{service}"} }'
     depends_on:
       - elasticsearch
 
@@ -64,7 +64,7 @@ services:
       - rabbit-username=user
       - rabbit-password=admin
     depends_on:
-      - elasticsearch
+      - rabbit
 
   gateway-service:
     container_name: gateway-service
@@ -122,6 +122,9 @@ services:
       - rabbit-port=5672
       - rabbit-username=user
       - rabbit-password=admin
+      - spring.rabbitmq.host=rabbit
+      - spring.rabbitmq.username=user
+      - spring.rabbitmq.password=admin
     depends_on:
       - discovery-service
       - rabbit
@@ -141,6 +144,9 @@ services:
       - rabbit-port=5672
       - rabbit-username=user
       - rabbit-password=admin
+      - spring.rabbitmq.host=rabbit
+      - spring.rabbitmq.username=user
+      - spring.rabbitmq.password=admin
     depends_on:
       - discovery-service
       - rabbit
@@ -170,7 +176,7 @@ services:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
-      - discovery-service
+      - elasticsearch
 networks:
   spring_cloud:
     external:

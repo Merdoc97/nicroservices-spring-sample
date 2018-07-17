@@ -8,7 +8,7 @@ spring:
     name: customer-service
   rabbitmq:
     host: localhost
-    username: guest
+    username: user
     password: admin
 
 eureka:

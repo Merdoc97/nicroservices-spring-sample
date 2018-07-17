@@ -9,7 +9,7 @@ spring:
     name: account-service
   rabbitmq:
     host: localhost
-    username: guest
+    username: user
     password: admin
 #eureka configuration for dashboard also
 eureka:
