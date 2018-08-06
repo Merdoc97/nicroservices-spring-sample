@@ -25,3 +25,6 @@ ab -c 10 -n 20000 http://localhost:8765/api/customer/customers
 ab -c 10 -n 20000 http://localhost:8765/api/account/accounts
 ab -c 10 -n 20000 http://localhost:8765/api/customer/customers/2
 and see how turbine works via rabbitmq
+
+# run zipkin command
+docker run --rm -it --name zipkin -p 9411:9411 -e STORAGE_TYPE=elasticsearch -e ES_HOSTS=elasticsearch  --net=spring_cloud openzipkin/zipkin:2.5.2
