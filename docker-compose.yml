@@ -86,6 +86,7 @@ services:
       - rabbit-port=5672
       - rabbit-username=user
       - rabbit-password=admin
+      - spring.zipkin.base-url=http://zipkin:9411
     depends_on:
       - discovery-service
       - rabbit
@@ -125,6 +126,7 @@ services:
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
+      - spring.zipkin.base-url=http://zipkin:9411
     depends_on:
       - discovery-service
       - rabbit
@@ -147,6 +149,7 @@ services:
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
+      - spring.zipkin.base-url=http://zipkin:9411
     depends_on:
       - discovery-service
       - rabbit
@@ -177,6 +180,18 @@ services:
       - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
       - elasticsearch
+
+  zipkin:
+    image: openzipkin/zipkin:2.5.2
+    networks:
+      spring_cloud:
+        aliases:
+          - zipkin
+    ports:
+        - "9411:9411"
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
 networks:
   spring_cloud:
     external:
