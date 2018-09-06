@@ -1,6 +1,6 @@
 info:
   component: gateway
-  
+
 endpoints:
   restart:
     enabled: true
@@ -8,6 +8,8 @@ endpoints:
     enabled: true
   health:
     sensitive: false
+
+#zuul configuration
 zuul:
   prefix: /api
   routes:
@@ -17,14 +19,19 @@ zuul:
     customer:
       path: /customer/**
       serviceId: customer-service
+#      ignore services from discovery eureka
+  ignored-services: '*'
+
 
 
 ribbon:
   eureka:
     enabled: true
 
+#eureka configuration
 eureka:
   instance:
+    health-check-url-path: /actuator/health
     leaseRenewalIntervalInSeconds: 5
     leaseExpirationDurationInSeconds: 10
     statusPageUrlPath: ${management.context-path}/info
@@ -37,25 +44,17 @@ eureka:
     registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-    registerWithEureka: true
 
 server:
   port: ${PORT:8765}
 
-logging:
-  level:
-    ROOT: INFO
-    org.springframework.web: INFO
-#  file: gateway.log
 
 #actuator example
-
 management:
   security:
     enabled: true
     roles: ACTUATOR
   endpoints:
-
     web:
       exposure:
 #      new feature most enpoints from http layer not allowed
@@ -84,6 +83,7 @@ spring:
     host: localhost
     username: guest
     password: admin
+    port: 5672
   zipkin:
     compression:
       enabled: true
@@ -91,11 +91,20 @@ spring:
     service:
       name: ${spring.application.name}
     sender:
-      type: web
+      type: rabbit
+    encoder: json_v1
+
   sleuth:
     sampler:
       probability: 1.0
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
 
+
+logging:
+  config: classpath:logbackrabbit.xml
 
 
 

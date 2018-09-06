@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration >
     <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
-    <property resource="log.properties"/>
+
+    <springProperty scope="context" name="spring.application.name" source="spring.application.name"
+                    defaultValue="service"/>
+
+    <springProperty scope="context" name="spring.rabbitmq.host" source="spring.rabbitmq.host"
+                    defaultValue="rabbit"/>
+    <springProperty scope="context" name="spring.rabbitmq.port" source="spring.rabbitmq.port"
+                    defaultValue="5672"/>
+
+    <springProperty scope="context" name="spring.rabbitmq.username" source="spring.rabbitmq.username"
+                    defaultValue="user"/>
+
+    <springProperty scope="context" name="spring.rabbitmq.password" source="spring.rabbitmq.password"
+                    defaultValue="admin"/>
+
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread, %X{X-B3-TraceId:-},%X{X-B3-SpanId:-}] %-5level %logger{36} - %msg%n
@@ -22,7 +37,7 @@
                 <pattern>
                     <pattern>
                         {
-                        "service": "customer-service"
+                        "service": "${spring.application.name}"
                         }
                     </pattern>
                 </pattern>
@@ -35,14 +50,15 @@
         </encoder>
 
         <!-- RabbitMQ connection -->
-        <host>${rabbit-host}</host>
-        <port>${rabbit-port}</port>
-        <username>${rabbit-username}</username>
-        <password>${rabbit-password}</password>
-        <applicationId>api-service-4</applicationId>
+        <host>${spring.rabbitmq.host}</host>
+        <port>${spring.rabbitmq.port}</port>
+        <username>${spring.rabbitmq.username}</username>
+        <password>${spring.rabbitmq.password}</password>
+        <applicationId>${spring.application.name}</applicationId>
         <routingKeyPattern>logstash</routingKeyPattern>
         <declareExchange>true</declareExchange>
         <exchangeType>direct</exchangeType>
+        <!--rabbit queue name-->
         <exchangeName>ex_logstash</exchangeName>
         <generateId>true</generateId>
         <charset>UTF-8</charset>

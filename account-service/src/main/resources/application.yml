@@ -1,16 +1,13 @@
-info:
-  component: ${spring.application.name}
 
 server:
   port: ${PORT:2223}
 
-spring:  
-  application:
-    name: account-service
+spring:
   rabbitmq:
     host: localhost
     username: guest
     password: admin
+    port: 5672
   zipkin:
     compression:
       enabled: true
@@ -18,10 +15,23 @@ spring:
     service:
       name: ${spring.application.name}
     sender:
-      type: web
+      type: rabbit
+    encoder: json_v1
   sleuth:
     sampler:
       probability: 1.0
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
+  application:
+    name: account-service
+logging:
+  config: classpath:logbackrabbit.xml
+
+info:
+  component: ${spring.application.name}
+
 #eureka configuration for dashboard also
 eureka:
   instance:

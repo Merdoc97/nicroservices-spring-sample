@@ -1,4 +1,4 @@
-package pl.piomin.microservices.edge;
+package pl.piomin.microservices.eureka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

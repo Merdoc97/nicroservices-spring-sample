@@ -8,12 +8,10 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
     registerWithEureka: false
-
   instance:
     leaseRenewalIntervalInSeconds: 10
     health-check-url-path: /actuator/health
-    leaseRenewalIntervalInSeconds: 15
-    leaseExpirationDurationInSeconds: 20
+    leaseExpirationDurationInSeconds: 60
 
 management:
   endpoints:
@@ -31,7 +29,6 @@ spring:
       turbine:
         clusters: default
         location: turbine-service
-
 
 
 

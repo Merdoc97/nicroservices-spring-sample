@@ -9,7 +9,7 @@ spring:
     name: turbine-service
   rabbitmq:
     host: localhost
-    username: guest
+    username: user
     password: admin
 
 eureka:
@@ -46,4 +46,3 @@ security:
     role: ACTUATOR
   basic:
     path: /actuator/**
-

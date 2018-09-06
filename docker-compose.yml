@@ -22,6 +22,21 @@ services:
       - discovery.type=single-node
       - transport.host=elasticsearch
       - http.host=elasticsearch
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3.7-management
+    networks:
+      spring_cloud:
+        aliases:
+          - rabbit
+    ports:
+        - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=admin
+    depends_on:
+      - elasticsearch
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:5.5.1
@@ -58,11 +73,11 @@ services:
         aliases:
           - discovery-service
     environment:
-      - JAVA_OPTS=-Xms128m -Xmx256m
-      - rabbit-host=rabbit
-      - rabbit-port=5672
-      - rabbit-username=user
-      - rabbit-password=admin
+      - JAVA_OPTS=-Xms256m -Xmx256m
+      - spring.rabbitmq.host=rabbit
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=user
+      - spring.rabbitmq.password=admin
     depends_on:
       - rabbit
 
@@ -82,10 +97,6 @@ services:
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
-      - rabbit-host=rabbit
-      - rabbit-port=5672
-      - rabbit-username=user
-      - rabbit-password=admin
       - spring.zipkin.base-url=http://zipkin:9411
     depends_on:
       - discovery-service
@@ -103,10 +114,9 @@ services:
     restart: on-failure:3
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
-      - JAVA_OPTS=-Xms512m -Xmx512m
+      - JAVA_OPTS=-Xms512m -Xmx768m
     depends_on:
       - discovery-service
-      - gateway-service
 
   customer-service:
     container_name: customer-service
@@ -119,10 +129,7 @@ services:
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
       - JAVA_OPTS=-Xms512m -Xmx512m
-      - rabbit-host=rabbit
-      - rabbit-port=5672
-      - rabbit-username=user
-      - rabbit-password=admin
+      - spring.rabbitmq.port=5672
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
@@ -142,10 +149,7 @@ services:
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
       - JAVA_OPTS=-Xms512m -Xmx512m
-      - rabbit-host=rabbit
-      - rabbit-port=5672
-      - rabbit-username=user
-      - rabbit-password=admin
+      - spring.rabbitmq.port=5672
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
@@ -159,27 +163,16 @@ services:
       spring_cloud:
         aliases:
           - turbine-service
+    ports:
+      - "8081:8081"
     environment:
+      - JAVA_OPTS=-Xms512m -Xmx1024m
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
     depends_on:
       - discovery-service
-
-  rabbit:
-    image: rabbitmq:3.7-management
-    networks:
-      spring_cloud:
-        aliases:
-          - rabbit
-    ports:
-        - "15672:15672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=admin
-    depends_on:
-      - elasticsearch
 
   zipkin:
     image: openzipkin/zipkin:2.5.2
@@ -192,6 +185,11 @@ services:
     environment:
       - STORAGE_TYPE=elasticsearch
       - ES_HOSTS=elasticsearch
+      - RABBIT_URI=amqp://user:admin@rabbit:5672
+      - RABBIT_QUEUE=zipkin
+      - RABBIT_ADDRESSES=rabbit
+      - RABBIT_PASSWORD=user
+      - RABBIT_USER=admin
 networks:
   spring_cloud:
     external:

@@ -4,12 +4,11 @@ server:
   port: ${PORT:3333}
 
 spring:
-  application:
-    name: customer-service
   rabbitmq:
     host: localhost
     username: guest
     password: admin
+    port: 5672
   zipkin:
     compression:
       enabled: true
@@ -17,18 +16,37 @@ spring:
     service:
       name: ${spring.application.name}
     sender:
-      type: web
+      type: rabbit
+    encoder: json_v1
   sleuth:
     sampler:
       probability: 1.0
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true
+  application:
+    name: customer-service
+logging:
+  config: classpath:logbackrabbit.xml
+
+security:
+  user:
+    name: user
+    password: password
 
 eureka:
   client:
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
   instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+    statusPageUrlPath: ${management.context-path}/info
+    metadata-map:
+       management.context-path: /actuator
+       user.name: ${security.user.name}
+       user.password: ${security.user.password}
 
 ribbon:
   eureka:
