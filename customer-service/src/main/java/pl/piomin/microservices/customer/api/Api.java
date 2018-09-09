@@ -1,5 +1,6 @@
 package pl.piomin.microservices.customer.api;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.piomin.microservices.customer.intercomm.AccountClient;
@@ -58,6 +59,12 @@ public class Api {
 		List<Account> accounts =  accountClient.getAccounts(id);
 		customer.setAccounts(accounts);
 		return customer;
+	}
+
+	@HystrixCommand
+	@GetMapping("/customers/cirkut")
+	public Customer cirkuit() throws Exception {
+		throw new Exception("wrong request");
 	}
 	
 }

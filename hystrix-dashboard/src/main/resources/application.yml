@@ -1,0 +1,9 @@
+info:
+  component: ${spring.application.name}
+
+server:
+  port: ${PORT:8082}
+
+spring:  
+  application:
+    name: hystrix-dashboard
