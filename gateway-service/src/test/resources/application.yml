@@ -1,0 +1,104 @@
+info:
+  component: gateway
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+#zuul configuration
+zuul:
+  prefix: /api
+  routes:
+    account:
+      path: /account/**
+      serviceId: account-service
+    customer:
+      path: /customer/**
+      serviceId: customer-service
+#      ignore services from discovery eureka
+    test:
+      path: /test/**
+      serviceId: test-service
+    test-converter:
+      path: /convert/xml/**
+      serviceId: test-converter
+  ignored-services: '*'
+  ignore-local-service: true
+
+  host:
+    socket-timeout-millis: 1000000000
+    connect-timeout-millis: 1000000000
+
+
+test-service:
+  ribbon:
+    listOfServers: http://localhost:${server.port}
+test-converter:
+  ribbon:
+    listOfServers: http://localhost:${server.port}
+
+ribbon:
+  eureka:
+    enabled: false
+
+#eureka configuration
+eureka:
+  instance:
+    health-check-url-path: /actuator/health
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 10
+    statusPageUrlPath: ${management.context-path}/info
+    metadata-map:
+       management.context-path: /actuator
+       user.name: ${security.user.name}
+       user.password: ${security.user.password}
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+    enabled: false
+
+server:
+  port: ${PORT:8765}
+  connection-timeout: 100M
+
+
+#actuator example
+management:
+  security:
+    enabled: true
+    roles: ACTUATOR
+  endpoints:
+    web:
+      exposure:
+#      new feature most enpoints from http layer not allowed
+        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
+      base-path: /actuator
+# deprecated
+  context-path: /actuator
+#security for actuator and
+security:
+  user:
+    name: user
+    password: password
+    role: ACTUATOR
+  basic:
+    path: /actuator/**
+
+#    hystrix
+feign:
+  hystrix:
+    enabled: true
+
+spring:
+  application:
+    name: gateway
+
+
+
+
+

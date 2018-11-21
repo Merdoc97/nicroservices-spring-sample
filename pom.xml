@@ -24,6 +24,12 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformats-binary</artifactId>
+                <version>2.9.6</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-openfeign</artifactId>
                 <version>2.0.0.RC2</version>
@@ -57,6 +63,7 @@
     <properties>
         <java.version>1.8</java.version>
         <docker-plugin-version>0.4.11</docker-plugin-version>
+        <lombok-version>1.16.20</lombok-version>
     </properties>
 
     <modules>
@@ -89,6 +96,12 @@
             <artifactId>assertj-core</artifactId>
             <version>3.9.1</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok-version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
