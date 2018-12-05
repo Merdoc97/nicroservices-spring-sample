@@ -23,7 +23,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 
 @Component
 @Slf4j
-public class ZuulRouteFilter extends ZuulFilter {
+public class XmlConverterZuulFilter extends ZuulFilter {
 
 
     @Autowired

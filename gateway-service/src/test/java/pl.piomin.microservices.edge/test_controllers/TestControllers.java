@@ -36,14 +36,4 @@ public class TestControllers {
                 .build();
     }
 
-
-    @GetMapping(value = "/proto", consumes = {"application/x-protobuf"},
-            produces = {"application/x-protobuf"})
-    public ResponseDTO testProto() {
-        return ResponseDTO.builder()
-                .message("passed")
-                .status("200")
-                .build();
-    }
-
 }

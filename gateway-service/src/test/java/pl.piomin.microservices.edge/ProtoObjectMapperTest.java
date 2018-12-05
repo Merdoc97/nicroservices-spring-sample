@@ -49,7 +49,5 @@ public class ProtoObjectMapperTest {
         log.info("json size: {}", jsonPojo.length);
         //        from proto to POJO
         log.info("convert proto bytes to pojo: {}", (Object) mapper.readerFor(RequestDTO.class).with(schema).readValue(pojo).toString());
-
-        log.info("convert from proto to JSON: {}", new java.lang.String(pojo));
     }
 }

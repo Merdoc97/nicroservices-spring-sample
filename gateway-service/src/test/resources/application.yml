@@ -26,6 +26,9 @@ zuul:
     test-converter:
       path: /convert/xml/**
       serviceId: test-converter
+    proto-converter:
+      path: /convert/proto/**
+      serviceId: proto-converter
   ignored-services: '*'
   ignore-local-service: true
 
@@ -40,7 +43,9 @@ test-service:
 test-converter:
   ribbon:
     listOfServers: http://localhost:${server.port}
-
+proto-converter:
+  ribbon:
+    listOfServers: http://localhost:${server.port}
 ribbon:
   eureka:
     enabled: false
