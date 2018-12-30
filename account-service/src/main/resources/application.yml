@@ -26,44 +26,31 @@ spring:
         enabled: true
   application:
     name: account-service
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+
+      discovery:
+        enabled: true
+
+
+
+
 logging:
   config: classpath:logbackrabbit.xml
 
 info:
   component: ${spring.application.name}
 
-#eureka configuration for dashboard also
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 10
-    statusPageUrlPath: ${management.context-path}/info
-    metadata-map:
-      management.context-path: /actuator
-      user.name: ${security.user.name}
-      user.password: ${security.user.password}
-  client:
-    serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-    registerWithEureka: true
-
-ribbon:
-  eureka:
-    enabled: true
-
-
 #secure actuator
 management:
-  security:
-    enabled: true
-    roles: ACTUATOR
-  context-path: /actuator
   endpoints:
     web:
       exposure:
-#      new feature most enpoints from http layer not allowed
-        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
-      base-path: /actuator
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 
 security:
   user:

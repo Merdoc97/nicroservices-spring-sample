@@ -24,26 +24,6 @@ zuul:
 
 
 
-ribbon:
-  eureka:
-    enabled: true
-
-#eureka configuration
-eureka:
-  instance:
-    health-check-url-path: /actuator/health
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 10
-    statusPageUrlPath: ${management.context-path}/info
-    metadata-map:
-       management.context-path: /actuator
-       user.name: ${security.user.name}
-       user.password: ${security.user.password}
-
-  client:
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
 
 server:
   port: ${PORT:8765}
@@ -51,17 +31,14 @@ server:
 
 #actuator example
 management:
-  security:
-    enabled: true
-    roles: ACTUATOR
   endpoints:
     web:
       exposure:
-#      new feature most enpoints from http layer not allowed
-        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
-      base-path: /actuator
-# deprecated
-  context-path: /actuator
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
 #security for actuator and
 security:
   user:
@@ -102,6 +79,11 @@ spring:
       rabbit:
         enabled: true
 
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
 
 logging:
   config: classpath:logbackrabbit.xml

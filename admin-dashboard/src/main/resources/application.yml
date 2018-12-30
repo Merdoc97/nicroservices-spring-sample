@@ -2,16 +2,16 @@
 server:
   port: ${PORT:8787}
 
-eureka:
-  client:
-    registryFetchIntervalSeconds: 20
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
-    registerWithEureka: false
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-    health-check-url-path: /actuator/health
-    leaseExpirationDurationInSeconds: 60
+#eureka:
+#  client:
+#    registryFetchIntervalSeconds: 20
+#    serviceUrl:
+#      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+#    registerWithEureka: false
+#  instance:
+#    leaseRenewalIntervalInSeconds: 10
+#    health-check-url-path: /actuator/health
+#    leaseExpirationDurationInSeconds: 60
 
 management:
   endpoints:
@@ -29,6 +29,12 @@ spring:
       turbine:
         clusters: default
         location: turbine-service
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+        register: false
 
 
 
