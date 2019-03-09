@@ -33,6 +33,15 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.mthizo247</groupId>
+			<artifactId>spring-cloud-netflix-zuul-websocket</artifactId>
+			<version>1.0.7.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

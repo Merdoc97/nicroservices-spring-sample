@@ -1,5 +1,5 @@
 info:
-  component: Edge Server
+  component: Gateway Server
   
 endpoints:
   restart:
@@ -11,7 +11,7 @@ endpoints:
 
 
 zuul:
-  prefix: /api
+#  prefix: /api
   routes:
     account:
       path: /account/**
@@ -19,11 +19,26 @@ zuul:
     customer:
       path: /customer/**
       serviceId: customer-service
+    ws-service:
+      path: /ws/**
+      serviceId: ws-service
+      customSensitiveHeaders: true
+  ws:
+      brokerages:
+        ws-service:
+          end-points: /ws-example
+          brokers:  /topic
+          destination-prefixes: /app
 
+
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 50000
 
 ribbon:
   eureka:
     enabled: true
+  ReadTimeout: 50000
+  ConnectTimeout: 3000
 
 eureka:
   instance:

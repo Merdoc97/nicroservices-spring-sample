@@ -36,6 +36,7 @@
         <module>gateway-service</module>
         <module>customer-service</module>
         <module>admin-dashboard</module>
+        <module>ws-service</module>
     </modules>
 
 <build>
