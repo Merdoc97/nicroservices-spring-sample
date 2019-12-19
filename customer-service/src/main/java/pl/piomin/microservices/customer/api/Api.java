@@ -1,8 +1,8 @@
 package pl.piomin.microservices.customer.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piomin.microservices.customer.intercomm.AccountClient;
 import pl.piomin.microservices.customer.model.Account;
@@ -31,19 +31,19 @@ public class Api {
 		customers.add(new Customer(4, "12348", "Karolina Lewandowska", CustomerType.INDIVIDUAL));
 	}
 	
-	@RequestMapping("/customers/pesel/{pesel}")
+	@GetMapping("/customers/pesel/{pesel}")
 	public Customer findByPesel(@PathVariable("pesel") String pesel) {
 		logger.info(String.format("Customer.findByPesel(%s)", pesel));
 		return customers.stream().filter(it -> it.getPesel().equals(pesel)).findFirst().get();	
 	}
 	
-	@RequestMapping("/customers")
+	@GetMapping("/customers")
 	public List<Customer> findAll() {
 		logger.info("Customer.findAll()");
 		return customers;
 	}
 	
-	@RequestMapping("/customers/{id}")
+	@GetMapping("/customers/{id}")
 	public Customer findById(@PathVariable("id") Integer id) {
 		logger.info(String.format("Customer.findById(%s)", id));
 		Customer customer = customers.stream().filter(it -> it.getId().intValue()==id.intValue()).findFirst().get();

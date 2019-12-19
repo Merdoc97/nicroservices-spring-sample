@@ -1,4 +1,12 @@
-server:  
+spring:
+  application:
+    name: eureka-discovery
+  security:
+    user:
+      name: user
+      password: password
+      roles: ACTUATOR
+server:
   port: ${PORT:8761}
     
 eureka:  
@@ -7,19 +15,17 @@ eureka:
     health-check-url-path: /actuator/health
     lease-renewal-interval-in-seconds: 5
     leaseExpirationDurationInSeconds: 5
+    #    param to send via eureka metadata for actuator
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: true
+    fetchRegistry: true
   server:
     enableSelfPreservation: false
   dashboard:
-    enabled: true
-
-security:
-  user:
-    name: user
-    password: password
-
+    enabled: false
 
 management:
   endpoints:
@@ -29,3 +35,6 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
+logging:
+  file: /tmp/tmp.log

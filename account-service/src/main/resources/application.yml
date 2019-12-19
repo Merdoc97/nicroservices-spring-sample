@@ -52,7 +52,7 @@ management:
 #      new feature most enpoints from http layer not allowed
         include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
       base-path: /actuator
-
+# spring security project 5 refused from auto configuration
 security:
   user:
     name: user

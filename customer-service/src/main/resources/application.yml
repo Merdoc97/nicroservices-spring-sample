@@ -21,6 +21,7 @@ eureka:
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
   instance:
+
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
     statusPageUrlPath: ${management.context-path}/info
@@ -42,7 +43,8 @@ management:
     web:
       exposure:
 #      new feature most enpoints from http layer not allowed
-        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
+        include: '*'
+
       base-path: /actuator
 hystrix:
   command:

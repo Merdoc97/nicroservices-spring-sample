@@ -7,12 +7,14 @@ eureka:
     registryFetchIntervalSeconds: 20
     serviceUrl:
       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
-    registerWithEureka: false
-
+    registerWithEureka: true
   instance:
-    leaseRenewalIntervalInSeconds: 10
-    health-check-url-path: /actuator/health
+#    param to send via eureka metadata for actuator
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
     leaseRenewalIntervalInSeconds: 15
+    health-check-url-path: /actuator/health
     leaseExpirationDurationInSeconds: 20
 
 management:
@@ -24,15 +26,19 @@ management:
     health:
       show-details: ALWAYS
 
-
 spring:
   boot:
     admin:
       turbine:
         clusters: default
         location: turbine-service
+      probed-endpoints: health, env, metrics, httptrace:trace, threaddump:dump, jolokia, info, logfile, refresh, flyway, liquibase, heapdump, loggers, auditevents
+  security:
+    user:
+      name: user
+      password: password
+      roles: ACTUATOR
 
 
-
-
-
+logging:
+  file: /tmp/tmp.log
