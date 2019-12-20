@@ -6,8 +6,6 @@ endpoints:
     enabled: true
   shutdown:
     enabled: true
-  health:
-    sensitive: false
 
 zuul:
   prefix: /api
@@ -19,35 +17,23 @@ zuul:
       path: /customer/**
       serviceId: customer-service
 
-#security for actuator and
-security:
-  user:
-    name: user
-    password: password
-    role: ACTUATOR
-  basic:
-    path: /actuator/**
-
-
 ribbon:
   eureka:
     enabled: true
 
 eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 10
-    statusPageUrlPath: ${management.context-path}/info
-    metadata-map:
-       management.context-path: /actuator
-       user.name: ${security.user.name}
-       user.password: ${security.user.password}
-
   client:
-    registryFetchIntervalSeconds: 5
+    registryFetchIntervalSeconds: 10
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-    registerWithEureka: true
+  instance:
+    metadata-map:
+      management.context-path: /actuator
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    leaseRenewalIntervalInSeconds: 5
+    health-check-url-path: /actuator/health
+    leaseExpirationDurationInSeconds: 20
 
 server:
   port: ${PORT:8765}
@@ -56,35 +42,26 @@ logging:
   level:
     ROOT: INFO
     org.springframework.web: INFO
-#  file: gateway.log
 
-#actuator example
 
 management:
-  security:
-    enabled: true
-    roles: ACTUATOR
   endpoints:
     web:
       exposure:
 #      new feature most enpoints from http layer not allowed
-        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
-      base-path: /actuator
-# deprecated
-  context-path: /actuator
-
+        include: '*'
 #    hystrix
 feign:
   hystrix:
     enabled: true
-
 spring:
   rabbitmq:
     host: localhost
     username: guest
     password: admin
 
-
-
-
-
+  security:
+    user:
+      name: user
+      password: password
+      roles: ACTUATOR

@@ -51,7 +51,6 @@
         <module>customer-service</module>
         <module>admin-dashboard</module>
         <module>turbine</module>
-        <module>hystrix-dashboard</module>
     </modules>
 
     <dependencies>

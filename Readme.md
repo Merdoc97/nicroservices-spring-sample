@@ -8,7 +8,7 @@ docker network create -d bridge spring_cloud
 mvn clean package
 
 # create docker images
-mvn docker:build -pl account-service/,customer-service/,admin-dashboard/,discovery-service/,gateway-service/, turbine/
+mvn dockerfile:build -pl account-service/,customer-service/,admin-dashboard/,discovery-service/,gateway-service/,turbine/
 
 # run containers
 docker-compose up

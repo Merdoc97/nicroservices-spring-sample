@@ -2,7 +2,7 @@ version: '3'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
     networks:
       spring_cloud:
         aliases:
@@ -24,7 +24,7 @@ services:
       - http.host=elasticsearch
   kibana:
     container_name: kibana
-    image: docker.elastic.co/kibana/kibana:5.5.1
+    image: docker.elastic.co/kibana/kibana:7.5.1
     networks:
       spring_cloud:
         aliases:
@@ -39,12 +39,14 @@ services:
 
   logstash:
     container_name: logstash
-    image: logstash:latest
+    image: logstash:7.5.1
     networks:
       spring_cloud:
         aliases:
           - logstash
     restart: always
+    ports:
+      - "5000:5000"
     command:
       logstash -e 'input { tcp { port => 5000 codec => "json" } } output { elasticsearch { hosts => ["elasticsearch"] index => "micro-%{serviceName}"} }'
     depends_on:
@@ -59,6 +61,7 @@ services:
           - discovery-service
     environment:
       - JAVA_OPTS=-Xms128m -Xmx256m
+      - eureka.instance.hostname=discovery-service
     depends_on:
       - elasticsearch
 

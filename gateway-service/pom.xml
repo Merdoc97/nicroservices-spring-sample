@@ -38,6 +38,21 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>4.9</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.2.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -45,18 +60,15 @@
 		<plugins>
 			<plugin>
 				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>${docker-plugin-version}</version>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.12</version>
 				<configuration>
-					<imageName>${project.build.finalName}:latest</imageName>
-					<dockerDirectory>gateway-service/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>gateway-service/target</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<imageName>${build.finalName}</imageName>
+					<repository>${artifactId}</repository>
+					<tag>latest</tag>
+					<buildArgs>
+						<JAR_FILE>${build.finalName}.jar</JAR_FILE>
+					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -2,39 +2,47 @@ package pl.piomin.microservices.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 /**
+ *
  */
 @Configuration
 public class SecurityActuatorConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Value("${security.user.name}")
+    @Value("${spring.security.user.name}")
     private String userName;
-    @Value("${management.security.roles}")
-    private String userRole;
-    @Value("${management.context-path}")
-    private String actuatorEndpoint;
-    @Value("${security.user.password}")
+    @Value("${spring.security.user.password}")
     private String userPassword;
-    @Value("${management.context-path}")
-    private String actuatorPath;
-    @Value("${management.security.roles}")
+
+    private final String actuatorPath = "/actuator";
+    @Value("${spring.security.user.roles}")
     private String actuatorRole;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .anonymous().disable()
+                //filtering to basic authorization allowed only for actuator
+                .requestMatcher(request -> {
+                    String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
+                    return (auth != null && auth.toLowerCase().contains("basic"));
+                })
                 .authorizeRequests()
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/**").permitAll();
+                .antMatchers(actuatorPath + "/**").hasAnyRole(actuatorRole)
+                //endpoint for refresh context spring cloud
+                .antMatchers("/instances/**").hasAnyRole(actuatorRole)
+                .antMatchers(actuatorPath + "/health").permitAll()
+                .antMatchers("/**").denyAll()
+                .and()
+                .httpBasic().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     //    in boot 2.0 is required
@@ -43,6 +51,6 @@ public class SecurityActuatorConfiguration extends WebSecurityConfigurerAdapter 
         auth.inMemoryAuthentication()
                 //    in boot 2.0 password encoder is required
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .withUser(userName).password(userPassword).roles(userRole);
+                .withUser(userName).password(userPassword).roles(actuatorRole);
     }
 }

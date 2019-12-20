@@ -11,6 +11,12 @@ spring:
     host: localhost
     username: guest
     password: admin
+  #security for actuator and
+  security:
+    user:
+      name: user
+      password: password
+      role: ACTUATOR
 
 eureka:
   client:
@@ -18,32 +24,16 @@ eureka:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
   instance:
     non-secure-port: 8081
-    statusPageUrlPath: ${management.context-path}/info
+    statusPageUrlPath: /actuator/info
     metadata-map:
       management.context-path: /actuator
-      user.name: ${security.user.name}
-      user.password: ${security.user.password}
-
+      management.hystrix: /
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
 
 management:
-  security:
-    enabled: true
-    roles: ACTUATOR
   endpoints:
     web:
       exposure:
 #      new feature most enpoints from http layer not allowed
-        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
-      base-path: /actuator
-# deprecated
-  context-path: /actuator
-
-#security for actuator and
-security:
-  user:
-    name: user
-    password: password
-    role: ACTUATOR
-  basic:
-    path: /actuator/**
-
+        include: '*'

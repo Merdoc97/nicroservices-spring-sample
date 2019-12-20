@@ -1,66 +1,42 @@
 info:
   component: ${spring.application.name}
-
 server:
-  port: ${PORT:2223}
+  port: ${PORT:3334}
 
-spring:  
+spring:
   application:
     name: account-service
-  rabbitmq:
-    host: localhost
-    username: guest
-    password: admin
+  security:
+    user:
+      name: user
+      password: password
+      roles: ACTUATOR
 
 #security for actuator and
-security:
-  user:
-    name: user
-    password: password
-    role: ACTUATOR
-  basic:
-    path: /actuator/**
-#eureka configuration for dashboard also
+
 eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 10
-    statusPageUrlPath: ${management.context-path}/info
-    metadata-map:
-      management.context-path: /actuator
-      user.name: ${security.user.name}
-      user.password: ${security.user.password}
   client:
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-    registerWithEureka: true
-      
+  instance:
+    health-check-url-path: /actuator/health
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    metadata-map:
+      management.context-path: /actuator
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
 ribbon:
   eureka:
     enabled: true
 
-
-#secure actuator
 management:
-  security:
-    enabled: true
-    roles: ACTUATOR
-  context-path: /actuator
   endpoints:
     web:
       exposure:
-#      new feature most enpoints from http layer not allowed
-        include: health, httptrace, info, configprops, metrics, env, mappings, sessions, conditions, beans, auditevents
-      base-path: /actuator
-# spring security project 5 refused from auto configuration
-security:
-  user:
-    name: user
-    password: password
-    role: ACTUATOR
-  basic:
-    path: /actuator/**
-
+        #      new feature most endpoints from http layer not allowed
+        include: '*'
 
 hystrix:
   command:

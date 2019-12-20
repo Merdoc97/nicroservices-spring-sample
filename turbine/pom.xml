@@ -19,6 +19,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
 		</dependency>
 		<dependency>
@@ -37,18 +41,15 @@
 		<plugins>
 			<plugin>
 				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>${docker-plugin-version}</version>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.12</version>
 				<configuration>
-					<imageName>${project.build.finalName}:latest</imageName>
-					<dockerDirectory>turbine/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>turbine/target</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<imageName>${build.finalName}</imageName>
+					<repository>${artifactId}</repository>
+					<tag>latest</tag>
+					<buildArgs>
+						<JAR_FILE>${build.finalName}.jar</JAR_FILE>
+					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>

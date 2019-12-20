@@ -1,4 +1,4 @@
-package pl.piomin.microservices.account;
+package pl.piomin.microservices.customer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,10 +11,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
-public class AccountTestService {
+public class CustomerService {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccountTestService.class, args);
+		SpringApplication.run(CustomerService.class, args);
 	}
 	
 }

@@ -49,11 +49,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
-		<!--		need for refresh context-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter</artifactId>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -61,22 +56,17 @@
 		<plugins>
 			<plugin>
 				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>${docker-plugin-version}</version>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.12</version>
 				<configuration>
-					<imageName>${project.build.finalName}:latest</imageName>
-					<dockerDirectory>customer-service/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>customer-service/target</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<imageName>${build.finalName}</imageName>
+					<repository>${artifactId}</repository>
+					<tag>latest</tag>
+					<buildArgs>
+						<JAR_FILE>${build.finalName}.jar</JAR_FILE>
+					</buildArgs>
 				</configuration>
 			</plugin>
-
-
 		</plugins>
 	</build>
 

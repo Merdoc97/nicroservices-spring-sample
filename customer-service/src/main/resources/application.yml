@@ -6,46 +6,38 @@ server:
 spring:
   application:
     name: customer-service
+  security:
+    user:
+      name: user
+      password: password
+      roles: ACTUATOR
 
 #security for actuator and
-security:
-  user:
-    name: user
-    password: password
-    role: ACTUATOR
-  basic:
-    path: /actuator/**
 
 eureka:
   client:
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
   instance:
-
+    health-check-url-path: /actuator/health
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
-    statusPageUrlPath: ${management.context-path}/info
     metadata-map:
       management.context-path: /actuator
-      user.name: ${security.user.name}
-      user.password: ${security.user.password}
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
 
 ribbon:
   eureka:
     enabled: true
 
 management:
-  security:
-    enabled: true
-    roles: ACTUATOR
-  context-path: /actuator
   endpoints:
     web:
       exposure:
-#      new feature most enpoints from http layer not allowed
+#      new feature most endpoints from http layer not allowed
         include: '*'
 
-      base-path: /actuator
 hystrix:
   command:
     default:
