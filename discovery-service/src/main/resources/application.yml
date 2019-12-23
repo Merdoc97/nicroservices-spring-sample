@@ -11,7 +11,7 @@ server:
     
 eureka:  
   instance:
-    hostname: ${EUREKA_HOSTNAME:localhost}
+    hostname: localhost
     health-check-url-path: /actuator/health
     lease-renewal-interval-in-seconds: 5
     leaseExpirationDurationInSeconds: 5
@@ -20,12 +20,10 @@ eureka:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
   client:
-    serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/
     registerWithEureka: true
     fetchRegistry: true
   server:
-    enableSelfPreservation: true
+    enableSelfPreservation: false
   dashboard:
     enabled: false
 
