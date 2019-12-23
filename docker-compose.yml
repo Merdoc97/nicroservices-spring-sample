@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   elasticsearch:
     container_name: elasticsearch
@@ -60,10 +60,9 @@ services:
         aliases:
           - discovery-service
     environment:
-      - JAVA_OPTS=-Xms128m -Xmx256m
+#      - EUREKA_HOSTNAME=discovery-service
       - eureka.instance.hostname=discovery-service
-    depends_on:
-      - elasticsearch
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
 
   gateway-service:
     container_name: gateway-service
@@ -96,10 +95,9 @@ services:
     restart: on-failure:3
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka/
-      - JAVA_OPTS=-Xms512m -Xmx512m
+#      - EUREKA_SERVICE_URL=http://discovery-service:8761/eureka/
     depends_on:
       - discovery-service
-      - gateway-service
 
   customer-service:
     container_name: customer-service

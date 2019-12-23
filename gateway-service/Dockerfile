@@ -1,4 +1,4 @@
-FROM java:8-jre-alpine
+FROM openjdk:11-jdk-slim
 VOLUME /properties
 VOLUME /logdir
 ARG JAR_FILE
