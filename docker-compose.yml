@@ -17,7 +17,6 @@ services:
       - xpack.watcher.enabled=false
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
       - discovery.zen.minimum_master_nodes=1
       - discovery.type=single-node
       - transport.host=elasticsearch
@@ -54,11 +53,13 @@ services:
 
   discovery-service:
     container_name: discovery-service
-    image: discovery-service:latest
+    image: localhost:5000/discovery-service:latest
     networks:
       spring_cloud:
         aliases:
           - discovery-service
+    ports:
+      - "8761:8761"
     environment:
       - eureka.instance.hostname=discovery-service
 
