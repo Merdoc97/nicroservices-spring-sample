@@ -1,0 +1,19 @@
+group = 'pl.piomin'
+version = '0.0.1-SNAPSHOT'
+def applicationName="discovery-service"
+
+dependencies {
+
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-server', version: springBootVersion
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springBootVersion
+
+}
+
+docker {
+    dependsOn build
+    tags dockerTag
+    name "${applicationName}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+    noCache true
+}

@@ -1,0 +1,59 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'com.palantir.docker' version '0.25.0'
+}
+
+
+group = 'pl.piomin'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+
+subprojects {
+    ext {
+        springBootVersion = '2.2.0.RELEASE'
+        dockerTag = 'latest'
+    }
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'java'
+    apply plugin: 'com.palantir.docker'
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE")
+            mavenBom("org.springframework.cloud:spring-cloud-netflix:2.2.0.RELEASE")
+            mavenBom("org.springframework.cloud:spring-cloud-openfeign:2.2.0.RELEASE")
+        }
+    }
+
+    dependencies {
+        implementation('org.springframework.boot:spring-boot-starter-web') {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        }
+        implementation 'org.springframework.boot:spring-boot-starter-undertow'
+        compileOnly 'org.assertj:assertj-core:3.9.1'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}

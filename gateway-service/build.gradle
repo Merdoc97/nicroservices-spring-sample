@@ -1,0 +1,26 @@
+group = 'pl.piomin'
+version = '0.0.1-SNAPSHOT'
+def applicationName="gateway-service"
+
+dependencies {
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.boot', name: 'spring-boot-properties-migrator'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-netflix-hystrix-stream'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-stream-rabbit'
+    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder',version: '4.9'
+    compile group: 'ch.qos.logback', name: 'logback-classic',version: '1.2.3'
+    compile group: 'ch.qos.logback', name: 'logback-core',version: '1.2.3'
+
+}
+
+docker {
+    dependsOn build
+    tags dockerTag
+    name "${applicationName}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+    noCache true
+}

@@ -53,7 +53,7 @@ services:
 
   discovery-service:
     container_name: discovery-service
-    image: localhost:5000/discovery-service:latest
+    image: discovery-service:latest
     networks:
       spring_cloud:
         aliases:

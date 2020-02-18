@@ -1,0 +1,31 @@
+group = 'pl.piomin'
+version = '0.0.1-SNAPSHOT'
+def applicationName="admin"
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+dependencies {
+
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springBootVersion
+    compile group: 'de.codecentric', name: 'spring-boot-admin-starter-server', version: '2.2.0-SNAPSHOT'
+    compile group: 'org.jolokia', name: 'jolokia-core'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter', version: springBootVersion
+    compile 'de.codecentric:spring-boot-admin-server-ui:2.2.0-SNAPSHOT'
+
+}
+
+
+docker {
+    dependsOn build
+    tags dockerTag
+    name "${applicationName}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+    noCache true
+}

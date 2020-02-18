@@ -25,3 +25,8 @@ ab -c 10 -n 20000 http://localhost:8765/api/customer/customers
 ab -c 10 -n 20000 http://localhost:8765/api/account/accounts
 ab -c 10 -n 20000 http://localhost:8765/api/customer/customers/2
 and see how turbine works via rabbitmq
+#to use gradle 
+##build some module
+gradle clean build -p /module
+##all build and build docker image
+gradle clean docker -p /module 

@@ -1,0 +1,23 @@
+group = 'pl.piomin'
+version = '0.0.1-SNAPSHOT'
+def applicationName="account-service"
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'net.logstash.logback', name: 'logstash-logback-encoder',version: '4.9'
+    compile group: 'ch.qos.logback', name: 'logback-classic',version: '1.2.3'
+    compile group: 'ch.qos.logback', name: 'logback-core',version: '1.2.3'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix'
+}
+
+docker {
+    dependsOn build
+    tags dockerTag
+    name "${applicationName}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+    noCache true
+}
