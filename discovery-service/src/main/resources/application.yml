@@ -36,6 +36,12 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+  metrics:
+    export:
+      graphite:
+        enabled: true
+        step: 1s
+
 
 logging:
   file: /tmp/tmp.log

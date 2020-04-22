@@ -27,6 +27,7 @@ public class SecurityActuatorConfiguration extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
                 .anonymous().disable()
                 //filtering to basic authorization allowed only for actuator
