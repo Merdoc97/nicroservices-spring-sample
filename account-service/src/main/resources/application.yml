@@ -35,8 +35,14 @@ management:
   endpoints:
     web:
       exposure:
-        #      new feature most endpoints from http layer not allowed
-        include: '*'
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+#    env:
+#      post:
+#        enabled: true
+
 
 hystrix:
   command:

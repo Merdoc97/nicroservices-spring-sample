@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
+import java.util.Optional;
+
 /**
  *
  */
@@ -27,12 +29,13 @@ public class SecurityActuatorConfiguration extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .anonymous().disable()
                 //filtering to basic authorization allowed only for actuator
                 .requestMatcher(request -> {
-                    String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
-                    return (auth != null && auth.toLowerCase().contains("basic"));
+                    boolean isActuator = request.getRequestURI().contains(actuatorPath);
+                    String auth = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION)).orElse("");
+                    return (isActuator && !auth.toLowerCase().contains("bearer"));
                 })
                 .authorizeRequests()
                 .antMatchers(actuatorPath + "/**").hasAnyRole(actuatorRole)
