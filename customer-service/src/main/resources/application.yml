@@ -37,6 +37,21 @@ management:
       exposure:
 #      new feature most endpoints from http layer not allowed
         include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 2s
+        pushgateway:
+          push-rate: 2s
+          enabled: true
+          grouping-key:
+            instance: ${server.address:localhost}:${server.port}
+            application: ${spring.application.name}
+    enable:
+      all: true
+
+
 
 hystrix:
   command:
@@ -45,3 +60,5 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 1000
+logging:
+  config:

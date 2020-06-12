@@ -19,7 +19,11 @@
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-graphite</artifactId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_pushgateway</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -36,7 +40,7 @@
                 <version>1.4.10</version>
                 <configuration>
                     <imageName>${build.finalName}</imageName>
-                    <repository>localhost:5000/${artifactId}</repository>
+                    <repository>${artifactId}</repository>
                     <tag>latest</tag>
                     <username>test</username>
                     <password>test</password>

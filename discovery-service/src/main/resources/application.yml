@@ -8,8 +8,7 @@ spring:
       roles: ACTUATOR
 server:
   port: ${PORT:8761}
-    
-eureka:  
+eureka:
   instance:
     hostname: localhost
     health-check-url-path: /actuator/health
@@ -19,6 +18,8 @@ eureka:
     metadata-map:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
+      application: ${spring.application.name}
+
   client:
     registerWithEureka: true
     fetchRegistry: true
@@ -38,9 +39,18 @@ management:
       show-details: ALWAYS
   metrics:
     export:
-      graphite:
-        enabled: true
-        step: 1s
+      prometheus:
+        pushgateway:
+          push-rate: 2s
+          enabled: true
+          grouping-key:
+            instance: ${spring.application.name}:${random.uuid}
+            application: ${spring.application.name}
+    enable:
+      all: true
+
+
+
 
 
 logging:

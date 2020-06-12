@@ -52,8 +52,7 @@ services:
       - elasticsearch
 
   discovery-service:
-    container_name: discovery-service
-    image: localhost:5000/discovery-service:latest
+    image: discovery-service:latest
     networks:
       spring_cloud:
         aliases:
@@ -62,6 +61,7 @@ services:
       - "8761:8761"
     environment:
       - eureka.instance.hostname=discovery-service
+      - management.metrics.export.prometheus.pushgateway.base-url=http://pushgateway:9091
 
   gateway-service:
     container_name: gateway-service
@@ -78,6 +78,7 @@ services:
       - spring.rabbitmq.host=rabbit
       - spring.rabbitmq.username=user
       - spring.rabbitmq.password=admin
+      - server.address=1.1.1.1
     depends_on:
       - discovery-service
 
