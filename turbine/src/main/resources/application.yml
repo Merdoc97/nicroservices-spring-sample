@@ -31,7 +31,11 @@ eureka:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
 
+
 management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
   endpoints:
     web:
       exposure:

@@ -54,10 +54,10 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.12</version>
+                <version>1.4.10</version>
                 <configuration>
                     <imageName>${build.finalName}</imageName>
-                    <repository>${artifactId}</repository>
+                    <repository>localhost:5000/${artifactId}</repository>
                     <tag>latest</tag>
                     <buildArgs>
                         <JAR_FILE>${build.finalName}.jar</JAR_FILE>

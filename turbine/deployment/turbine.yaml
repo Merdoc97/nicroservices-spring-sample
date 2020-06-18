@@ -1,0 +1,51 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: turbine-service
+  namespace: default
+  labels:
+    app: turbine-service
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: turbine-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: turbine-service
+        version: latest
+    spec:
+      containers:
+        - name: turbine-service
+          image: localhost:5000/turbine-service:latest
+          env:
+            - name: eureka.client.serviceUrl.defaultZone
+              value: http://discovery:8761/eureka/
+            - name: eureka.instance.prefer-ip-address
+              value: "true"
+            - name: spring.rabbitmq.host
+              value: rabbit
+            - name: spring.rabbitmq.username
+              value: user
+            - name: spring.rabbitmq.password
+              value: admin
+            - name: management.endpoint.health.show-details
+              value: ALWAYS
+
+          ports:
+            - containerPort: 8081
+              hostPort: 8081
+          resources: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+
+
+

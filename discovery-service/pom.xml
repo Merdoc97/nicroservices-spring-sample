@@ -18,14 +18,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_pushgateway</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
@@ -39,8 +31,8 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.10</version>
                 <configuration>
-                    <imageName>${build.finalName}</imageName>
-                    <repository>${artifactId}</repository>
+                    <imageName>{build.finalName}</imageName>
+                    <repository>localhost:5000/${artifactId}</repository>
                     <tag>latest</tag>
                     <username>test</username>
                     <password>test</password>

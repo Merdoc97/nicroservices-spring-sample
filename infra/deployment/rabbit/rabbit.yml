@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rabbit
+  namespace: default
+  labels:
+    app: rabbit
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rabbit
+        version: latest
+    spec:
+      containers:
+        - name: rabbit
+          image: rabbitmq:3.7-management
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: user
+            - name: RABBITMQ_DEFAULT_PASS
+              value: admin
+
+          ports:
+            - containerPort: 15672
+              hostPort: 15672
+            - containerPort: 5672
+          resources: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+
+
+

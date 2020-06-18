@@ -19,6 +19,7 @@ eureka:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
       application: ${spring.application.name}
+    prefer-ip-address: true
 
   client:
     registerWithEureka: true
@@ -26,7 +27,7 @@ eureka:
   server:
     enableSelfPreservation: true
   dashboard:
-    enabled: false
+    enabled: true
 
 
 management:

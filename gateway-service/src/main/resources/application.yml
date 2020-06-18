@@ -23,17 +23,17 @@ ribbon:
 
 eureka:
   client:
-    registryFetchIntervalSeconds: 10
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
   instance:
+    health-check-url-path: /actuator/health
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
     metadata-map:
       management.context-path: /actuator
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
-    leaseRenewalIntervalInSeconds: 5
-    health-check-url-path: /actuator/health
-    leaseExpirationDurationInSeconds: 20
+
 
 server:
   port: ${PORT:8765}
@@ -55,11 +55,6 @@ feign:
   hystrix:
     enabled: true
 spring:
-  rabbitmq:
-    host: localhost
-    username: guest
-    password: admin
-
   security:
     user:
       name: user
