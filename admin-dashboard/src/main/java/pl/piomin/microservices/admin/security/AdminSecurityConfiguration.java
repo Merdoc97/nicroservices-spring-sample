@@ -40,6 +40,7 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(this.adminServer.path("/assets/**")).permitAll()
                 .antMatchers(this.adminServer.path("/login")).permitAll()
+//                .antMatchers(this.adminServer.path("/actuator/**")).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage(this.adminServer.path("/login")).successHandler(successHandler).and()

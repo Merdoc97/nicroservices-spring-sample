@@ -2,20 +2,7 @@
 server:
   port: ${PORT:8787}
 
-eureka:
-  client:
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    registerWithEureka: true
-  instance:
-#    param to send via eureka metadata for actuator
-    metadata-map:
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
-    leaseRenewalIntervalInSeconds: 15
-    health-check-url-path: /actuator/health
-    leaseExpirationDurationInSeconds: 20
+
 
 management:
   endpoints:
@@ -26,13 +13,32 @@ management:
     health:
       show-details: ALWAYS
 
+
 spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          url-expression: "'http://'+serviceId"
+
+    kubernetes:
+      discovery:
+        enabled: false
+
+
   boot:
     admin:
       turbine:
         clusters: default
         location: turbine-service
-      probed-endpoints: health, env, metrics, httptrace:trace, threaddump:dump, jolokia, info, logfile, refresh, flyway, liquibase, heapdump, loggers, auditevents
+      probed-endpoints: health, env, metrics, httptrace:trace, threaddump:dump, jolokia, info, logfile, refresh, flyway, liquibase, heapdump, loggers, auditevents, hystrix.stream
+      monitor:
+        info-interval: 10s
+        status-interval: 5000ms
+
+
+
   security:
     user:
       name: user

@@ -33,6 +33,7 @@ spec:
             - containerPort: 15672
               hostPort: 15672
             - containerPort: 5672
+              hostPort: 5672
           resources: {}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30

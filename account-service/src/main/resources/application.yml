@@ -11,21 +11,15 @@ spring:
       name: user
       password: password
       roles: ACTUATOR
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
+    discovery:
+      enabled: true
 
-#security for actuator and
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-  instance:
-    health-check-url-path: /actuator/health
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
-    metadata-map:
-      management.context-path: /actuator
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
 
 ribbon:
   eureka:

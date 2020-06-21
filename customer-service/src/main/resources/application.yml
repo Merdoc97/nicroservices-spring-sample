@@ -3,6 +3,7 @@ info:
 server:
   port: ${PORT:3333}
 
+
 spring:
   application:
     name: customer-service
@@ -11,25 +12,15 @@ spring:
       name: user
       password: password
       roles: ACTUATOR
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
+    discovery:
+      enabled: true
 
-#security for actuator andF
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-  instance:
-    health-check-url-path: /actuator/health
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
-    metadata-map:
-      management.context-path: /actuator
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
-
-ribbon:
-  eureka:
-    enabled: true
 
 management:
   endpoints:
@@ -38,16 +29,6 @@ management:
 #      new feature most endpoints from http layer not allowed
         include: '*'
   metrics:
-    export:
-      prometheus:
-        enabled: true
-        step: 2s
-        pushgateway:
-          push-rate: 2s
-          enabled: true
-          grouping-key:
-            instance: ${server.address:localhost}:${server.port}
-            application: ${spring.application.name}
     enable:
       all: true
 

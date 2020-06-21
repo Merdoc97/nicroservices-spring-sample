@@ -5,6 +5,9 @@ metadata:
   namespace: default
   labels:
     app: customer-service
+    spring.boot: "true"
+    user.name: user
+    user.password: password
   annotations:
     deployment.kubernetes.io/revision: '1'
 spec:
@@ -24,10 +27,6 @@ spec:
         - name: customer-service
           image: localhost:5000/customer-service:latest
           env:
-            - name: eureka.client.serviceUrl.defaultZone
-              value: http://discovery:8761/eureka/
-            - name: eureka.instance.prefer-ip-address
-              value: "true"
             - name: management.endpoint.health.show-details
               value: ALWAYS
           ports:

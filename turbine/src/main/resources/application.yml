@@ -9,7 +9,7 @@ spring:
     name: turbine-service
   rabbitmq:
     host: localhost
-    username: guest
+    username: user
     password: admin
   #security for actuator and
   security:
@@ -18,19 +18,14 @@ spring:
       password: password
       role: ACTUATOR
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
-  instance:
-    non-secure-port: 8081
-    statusPageUrlPath: /actuator/info
-    metadata-map:
-      management.context-path: /actuator
-      management.hystrix: /
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
-
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
+      discovery:
+        enabled: true
 
 management:
   endpoint:

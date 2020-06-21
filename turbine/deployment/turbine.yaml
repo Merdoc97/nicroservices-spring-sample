@@ -24,10 +24,6 @@ spec:
         - name: turbine-service
           image: localhost:5000/turbine-service:latest
           env:
-            - name: eureka.client.serviceUrl.defaultZone
-              value: http://discovery:8761/eureka/
-            - name: eureka.instance.prefer-ip-address
-              value: "true"
             - name: spring.rabbitmq.host
               value: rabbit
             - name: spring.rabbitmq.username
