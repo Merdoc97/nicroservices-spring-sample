@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{.Values.name}}
+  namespace: {{.Values.global.baseNamespace}}
+  labels:
+    app: {{.Values.name}}
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+        version: latest
+    spec:
+      containers:
+        - name: {{.Values.name}}
+          image: "{{ $.Values.global.dockerRegistryUrl}}:{{.Chart.AppVersion}}"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /usr/share/logstash/pipeline/logstash-elk.conf
+              name: config-volume
+              subPath: logstash-elk.conf
+          command:
+            - logstash
+          ports:
+            - containerPort: {{.Values.resources.port}}
+              name: tcp
+          resources:
+            requests:
+              memory: {{ .Values.resources.memory }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: logstash-config
+
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+
+
+

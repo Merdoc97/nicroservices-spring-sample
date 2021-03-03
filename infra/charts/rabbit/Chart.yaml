@@ -1,0 +1,7 @@
+apiVersion: v2
+name: rabbit
+description: A Helm chart for Rabbit Mq Service
+kubeVersion: '>=1.15.3'
+type: application
+version: 0.0.1
+dependencies: []

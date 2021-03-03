@@ -1,0 +1,10 @@
+global:
+  baseNamespace: infra
+  dockerRegistryUrl: docker.elastic.co/logstash/logstash
+  hostName: infra-host
+name: logstash
+replicaCount: 1
+
+resources:
+  memory: 512Mi
+  port: 5044

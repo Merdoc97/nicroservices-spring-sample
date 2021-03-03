@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{.Values.name}}
+  namespace: {{.Values.global.baseNamespace}}
+  labels:
+    app: {{.Values.name}}
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+    spec:
+      serviceAccountName: {{.Values.name}}
+      containers:
+        - name: {{.Values.name}}
+          image: "{{ $.Values.global.dockerRegistryUrl}}/{{.Values.image.repository}}:{{.Chart.AppVersion}}"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /configs/config.properties
+              subPath: config.properties
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.resources.memory }}
+            limits:
+              memory: {{ .Values.resources.memory }}
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: 'classpath:/,/configs/config.properties'
+            - name: JAVA_TOOL_OPTIONS
+              value: {{ .Values.resources.java.opts }}
+          ports:
+            - containerPort: {{.Values.port}}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: boot-admin-config
+      restartPolicy: Always
+
+

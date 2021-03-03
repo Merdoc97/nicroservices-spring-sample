@@ -1,0 +1,12 @@
+global:
+  baseNamespace: infra
+  dockerRegistryUrl: rabbitmq
+  hostName: infra-host
+name: rabbit
+replicaCount: 1
+image:
+  repository: 3.8-management
+resources:
+  memory: 1024Mi
+  managementPort: 15672
+  port: 5672

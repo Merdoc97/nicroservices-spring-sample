@@ -8,7 +8,6 @@ endpoints:
     enabled: true
 
 zuul:
-  prefix: /api
   routes:
     account:
       path: /account/**
@@ -21,19 +20,14 @@ ribbon:
   eureka:
     enabled: false
 
-
 server:
   port: ${PORT:8765}
-
-logging:
-  level:
-    ROOT: INFO
-    org.springframework.web: INFO
 
 
 management:
   endpoints:
     web:
+
       exposure:
 #      new feature most enpoints from http layer not allowed
         include: '*'

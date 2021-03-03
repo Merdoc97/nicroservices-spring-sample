@@ -46,7 +46,7 @@
 				<configuration>
 					<imageName>${build.finalName}</imageName>
 					<repository>localhost:5000/${artifactId}</repository>
-					<tag>latest</tag>
+					<tag>0.0.1</tag>
 					<buildArgs>
 						<JAR_FILE>${build.finalName}.jar</JAR_FILE>
 					</buildArgs>

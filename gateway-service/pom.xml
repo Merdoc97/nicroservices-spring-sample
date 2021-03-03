@@ -31,10 +31,6 @@
 			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>net.logstash.logback</groupId>
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>4.9</version>
@@ -61,6 +57,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -73,7 +73,7 @@
 				<configuration>
 					<imageName>${build.finalName}</imageName>
 					<repository>localhost:5000/${artifactId}</repository>
-					<tag>latest</tag>
+					<tag>0.0.1</tag>
 					<buildArgs>
 						<JAR_FILE>${build.finalName}.jar</JAR_FILE>
 					</buildArgs>

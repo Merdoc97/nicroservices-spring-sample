@@ -1,0 +1,31 @@
+global:
+  baseNamespace: microservice
+  dockerRegistryUrl: localhost:5000
+  hostName: microservice-host
+name: gateway-service
+replicaCount: 1
+port: 8080
+image:
+  repository: gateway-service
+username: user
+password: password
+role: ACTUATOR
+discoveryEnabled: true
+
+resources:
+  memory: 512Mi
+  java:
+    opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
+actuator:
+  showValues: ALWAYS
+  path: /api/actuator
+
+server:
+  path: /api
+rabbit:
+  host: rabbit.infra
+  port: 5672
+  username: user
+  password: password
+logstash:
+  location: logstash.infra:5044

@@ -32,10 +32,7 @@ public class TopicConfiguration {
 
     @Bean
     public Supplier<Flux<String>> output() {
-        return () -> {
-
-            return Flux.just("OK");
-        };
+        return () -> Flux.just("OK");
 
     }
 }

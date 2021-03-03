@@ -1,9 +1,6 @@
 
 server:
   port: ${PORT:8787}
-
-
-
 management:
   endpoints:
     web:
@@ -25,7 +22,8 @@ spring:
     kubernetes:
       discovery:
         enabled: false
-
+        service-labels:
+          stack: springboot
 
   boot:
     admin:
@@ -37,14 +35,8 @@ spring:
         info-interval: 10s
         status-interval: 5000ms
 
-
-
   security:
     user:
       name: user
       password: password
       roles: ACTUATOR
-
-
-logging:
-  file: /tmp/tmp.log

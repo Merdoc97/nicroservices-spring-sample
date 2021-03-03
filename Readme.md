@@ -21,7 +21,7 @@ search index for kibana micro-*
 after images succesfully run go to admin dashboard and go to turbine dashboard (to see loading activity)
 run command
 
-ab -c 10 -n 20000 http://localhost:8765/api/customer/customers
-ab -c 10 -n 20000 http://localhost:8765/api/account/accounts
-ab -c 10 -n 20000 http://localhost:8765/api/customer/customers/2
+ab -c 10 -n 20000 http://192.168.49.2/api/customer/customers
+ab -c 10 -n 20000 http://192.168.49.2/api/account/accounts
+ab -c 10 -n 20000 http://192.168.49.2/api/customer/customers/2
 and see how turbine works via rabbitmq

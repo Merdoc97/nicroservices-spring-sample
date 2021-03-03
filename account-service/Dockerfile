@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:11-jre
+FROM openjdk:13.0.2-slim
 VOLUME /properties
 VOLUME /logdir
 ARG JAR_FILE

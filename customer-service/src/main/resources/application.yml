@@ -3,7 +3,6 @@ info:
 server:
   port: ${PORT:3333}
 
-
 spring:
   application:
     name: customer-service
@@ -20,6 +19,8 @@ spring:
         period: 5000
     discovery:
       enabled: true
+  profiles:
+    active: kubernetes,stash
 
 
 management:
@@ -28,6 +29,7 @@ management:
       exposure:
 #      new feature most endpoints from http layer not allowed
         include: '*'
+      base-path: /actuator
   metrics:
     enable:
       all: true
@@ -41,5 +43,3 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 1000
-logging:
-  config:

@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{.Values.name}}
+  namespace: {{.Values.global.baseNamespace}}
+  labels:
+    app: {{.Values.name}}
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+        version: latest
+    spec:
+      containers:
+        - name: rabbit
+          image: "{{ $.Values.global.dockerRegistryUrl}}:{{.Values.image.repository}}"
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: rabbit-config
+          ports:
+            - containerPort: {{.Values.resources.port}}
+            - containerPort: {{.Values.resources.managementPort}}
+          resources:
+            requests:
+              memory: {{ .Values.resources.memory }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+
+
+
