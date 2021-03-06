@@ -14,7 +14,7 @@ discoveryEnabled: true
 
 resources:
   memory: 512Mi
-  cpu: 500m
+  cpu: 200m
   java:
     opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
 actuator:
