@@ -8,3 +8,4 @@ replicaCount: 1
 resources:
   memory: 512Mi
   port: 5044
+  cpu: 200m

@@ -24,9 +24,9 @@ spec:
           image: "{{ $.Values.global.dockerRegistryUrl}}:{{.Chart.AppVersion}}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - mountPath: /usr/share/logstash/pipeline/logstash-elk.conf
+            - mountPath: /usr/share/logstash/pipeline/logstash.conf
               name: config-volume
-              subPath: logstash-elk.conf
+              subPath: logstash.conf
           command:
             - logstash
           ports:
@@ -35,6 +35,7 @@ spec:
           resources:
             requests:
               memory: {{ .Values.resources.memory }}
+              cpu: {{.Values.resources.cpu}}
       volumes:
         - name: config-volume
           configMap:

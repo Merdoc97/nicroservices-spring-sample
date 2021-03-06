@@ -32,6 +32,7 @@ spec:
               memory: {{ .Values.resources.memory }}
             limits:
               memory: {{ .Values.resources.memory }}
+              cpu: {{.Values.resources.cpu}}
           env:
             - name: SPRING_CONFIG_LOCATION
               value: 'classpath:/,/configs/config.properties'

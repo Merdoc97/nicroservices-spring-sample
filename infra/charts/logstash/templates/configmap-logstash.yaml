@@ -4,5 +4,5 @@ metadata:
   name: logstash-config
   namespace: {{.Values.global.baseNamespace}}
 data:
-  logstash-elk.conf: |
+  logstash.conf: |
     input { tcp { port => 5044 codec => "json" } } output { elasticsearch { hosts => ["elasticsearch-master:9200"] index => "micro-%{serviceName}"} }
