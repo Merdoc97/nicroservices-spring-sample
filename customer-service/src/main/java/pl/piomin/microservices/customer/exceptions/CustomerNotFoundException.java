@@ -1,14 +1,19 @@
 package pl.piomin.microservices.customer.exceptions;
 
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(org.springframework.http.HttpStatus.NOT_FOUND)
-public class CustomerNotFoundException extends Exception {
+@Slf4j
+@Getter
+public class CustomerNotFoundException extends ResponseStatusException implements GlobalBusinessException {
 
-	private static final long serialVersionUID = 1L;
-	
-	public CustomerNotFoundException(String pesel) {
-		super("No such customer: " + pesel);
-	}
-	
+    private static final long serialVersionUID = 1L;
+    private final String errorCode;
+
+    public CustomerNotFoundException(String reason) {
+        super(HttpStatus.NOT_FOUND, reason);
+        this.errorCode = "404";
+    }
 }

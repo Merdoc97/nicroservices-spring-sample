@@ -1,9 +1,10 @@
 package pl.piomin.microservices.account.exceptions;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(org.springframework.http.HttpStatus.NOT_FOUND)
-public class AccountNotFoundException extends Exception {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class AccountNotFoundException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
 

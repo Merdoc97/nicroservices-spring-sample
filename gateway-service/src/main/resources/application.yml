@@ -39,11 +39,11 @@ spring:
   cloud:
     kubernetes:
       reload:
-        enabled: true
+        enabled: false
         mode: polling
         period: 5000
     discovery:
-      enabled: true
+      enabled: false
   security:
     user:
       name: user
