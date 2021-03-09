@@ -23,3 +23,16 @@ server:
   path: /
 logstash:
   location: logstash.infra:5044
+zipkin:
+  enabled: true
+  url: zipkin.infra
+  port: 9411
+sleuth:
+  enabled: true
+  messaging:
+    enabled: true
+rabbit:
+  host: rabbit.infra
+  port: 5672
+  username: user
+  password: password

@@ -14,7 +14,6 @@ discoveryEnabled: true
 
 resources:
   memory: 512Mi
-  cpu: 200m
   java:
     opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
 actuator:
@@ -30,3 +29,11 @@ rabbit:
   password: password
 logstash:
   location: logstash.infra:5044
+zipkin:
+  enabled: true
+  url: zipkin.infra
+  port: 9411
+sleuth:
+  enabled: true
+  messaging:
+    enabled: true

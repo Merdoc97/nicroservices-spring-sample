@@ -9,3 +9,8 @@ resources:
   memory: 256Mi
   port: 5044
   cpu: 200m
+rabbit:
+  username: user
+  password: password
+  host: rabbit
+  port: 5672

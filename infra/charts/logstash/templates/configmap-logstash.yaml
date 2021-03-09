@@ -5,4 +5,4 @@ metadata:
   namespace: {{.Values.global.baseNamespace}}
 data:
   logstash.conf: |
-    input { tcp { port => 5044 codec => "json" } } output { elasticsearch { hosts => ["elasticsearch-master:9200"] index => "micro-%{serviceName}"} }
+    input { rabbitmq { host => "{{.Values.rabbit.host}}:{{.Values.rabbit.port}}" durable => true user => "{{.Values.rabbit.username}}" password => "{{.Values.rabbit.password}}" heartbeat => 30 queue => "elk"} } output { elasticsearch { hosts =>["elasticsearch-master:9200"] index => "micro-%{serviceName}"} }

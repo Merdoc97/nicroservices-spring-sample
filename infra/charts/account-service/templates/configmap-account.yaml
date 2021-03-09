@@ -15,4 +15,9 @@ data:
     management.endpoints.web.base-path: {{.Values.actuator.path}}
     management.endpoint.health.show-details: {{.Values.actuator.showValues}}
     server.servlet.context-path: {{.Values.server.path}}
-    logstash.location: {{.Values.logstash.location}}
+    spring.zipkin.enabled: {{.Values.zipkin.enabled}}
+    spring.sleuth.messaging.enabled: {{.Values.sleuth.messaging.enabled}}
+    spring.sleuth.messaging.rabbit.enabled: {{.Values.sleuth.messaging.enabled}}
+    spring.rabbitmq.host: {{.Values.rabbit.host}}
+    spring.rabbitmq.username: {{.Values.rabbit.username}}
+    spring.rabbitmq.password: {{.Values.rabbit.password}}

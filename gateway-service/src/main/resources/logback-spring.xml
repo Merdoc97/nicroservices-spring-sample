@@ -2,47 +2,68 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
-    <springProperty name="service-name" source="spring.application.name" defaultValue="unknown"/>
-    <springProperty name="logstash.location" source="logstash.location" defaultValue="localhost:5000"/>
+    <springProperty name="spring.application.name" source="spring.application.name" defaultValue="unknown"/>
+    <springProperty name="spring.rabbitmq.host" source="spring.rabbitmq.host"
+                    defaultValue="localhost"/>
+    <springProperty name="spring.rabbitmq.port" source="spring.rabbitmq.port"
+                    defaultValue="5672"/>
+
+    <springProperty name="spring.rabbitmq.username" source="spring.rabbitmq.username"
+                    defaultValue="user"/>
+
+    <springProperty name="spring.rabbitmq.password" source="spring.rabbitmq.password"
+                    defaultValue="password"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread, %X{X-B3-TraceId:-},%X{X-B3-SpanId:-}] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="STASH"
-              class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${logstash.location}</destination>
-
+    <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
         <encoder
                 class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
-                <mdc/> <!-- MDC variables on the Thread will be written as JSON fields -->
-                <context/> <!--Outputs entries from logback's context -->
-                <version/> <!-- Logstash json format version, the @version field in the output -->
-                <logLevel/>
-                <loggerName/>
+                <mdc /> <!-- MDC variables on the Thread will be written as JSON fields -->
+                <context /> <!--Outputs entries from logback's context -->
+                <version /> <!-- Logstash json format version, the @version field in the output -->
+                <logLevel />
+                <loggerName />
 
                 <pattern>
                     <pattern>
                         {
-                        "serviceName": "${service-name}"
+                        "serviceName": "${spring.application.name}"
                         }
                     </pattern>
                 </pattern>
 
-                <threadName/>
-                <message/>
-                <logstashMarkers/>
-                <stackTrace/>
+                <threadName />
+                <message />
+                <logstashMarkers />
+                <stackTrace />
             </providers>
         </encoder>
+
+        <!-- RabbitMQ connection -->
+        <host>${spring.rabbitmq.host}</host>
+        <port>${spring.rabbitmq.port}</port>
+        <username>${spring.rabbitmq.username}</username>
+        <password>${spring.rabbitmq.password}</password>
+        <applicationId>${spring.application.name}</applicationId>
+        <routingKeyPattern>logstash</routingKeyPattern>
+        <declareExchange>true</declareExchange>
+        <exchangeType>direct</exchangeType>
+        <exchangeName>ex_logstash</exchangeName>
+        <generateId>true</generateId>
+        <charset>UTF-8</charset>
+        <durable>true</durable>
+        <deliveryMode>PERSISTENT</deliveryMode>
     </appender>
 
     <springProfile name="stash">
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
-            <appender-ref ref="STASH"/>
+            <appender-ref ref="AMQP"/>
         </root>
     </springProfile>
 

@@ -18,4 +18,6 @@ data:
     spring.rabbitmq.host: {{.Values.rabbit.host}}
     spring.rabbitmq.username: {{.Values.rabbit.username}}
     spring.rabbitmq.password: {{.Values.rabbit.password}}
-    logstash.location: {{.Values.logstash.location}}
+    spring.zipkin.enabled: {{.Values.zipkin.enabled}}
+    spring.sleuth.messaging.enabled: {{.Values.sleuth.messaging.enabled}}
+    spring.sleuth.messaging.rabbit.enabled: {{.Values.sleuth.messaging.enabled}}

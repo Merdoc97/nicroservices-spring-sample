@@ -1,0 +1,8 @@
+apiVersion: v2
+name: zipkin
+description: A Helm chart for Open zipkin
+kubeVersion: '>=1.15.3'
+type: application
+version: 0.0.1
+appVersion: 2.22
+dependencies: []

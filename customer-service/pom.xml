@@ -31,25 +31,16 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.logstash.logback</groupId>
-			<artifactId>logstash-logback-encoder</artifactId>
-			<version>${logstash.logback.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -63,7 +54,7 @@
 				<configuration>
 					<imageName>${build.finalName}</imageName>
 					<repository>localhost:5000/${artifactId}</repository>
-					<tag>0.0.8</tag>
+					<tag>0.0.11</tag>
 					<buildArgs>
 						<JAR_FILE>${build.finalName}.jar</JAR_FILE>
 					</buildArgs>
