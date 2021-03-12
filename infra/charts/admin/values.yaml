@@ -4,7 +4,7 @@ global:
   hostName: microservice-host
 name: boot-admin
 replicaCount: 1
-port: 8787
+port: 8080
 image:
   repository: admin
 username: user
@@ -22,3 +22,5 @@ actuator:
 
 server:
   path: /boot-admin
+prometheus:
+  scrape: true

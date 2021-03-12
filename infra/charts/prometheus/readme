@@ -1,0 +1,1 @@
+helm install prometheus prometheus-community/prometheus --namespace infra

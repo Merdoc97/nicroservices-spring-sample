@@ -42,6 +42,8 @@ spring:
         enabled: false
         mode: polling
         period: 5000
+      discovery:
+        enabled: false
     discovery:
       enabled: false
   security:
@@ -68,8 +70,8 @@ spring:
     sampler:
       probability: 1.0
     messaging:
-      enabled: true
+      enabled: false
       rabbit:
-        enabled: true
+        enabled: false
 
 

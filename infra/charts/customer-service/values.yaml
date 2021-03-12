@@ -36,3 +36,5 @@ rabbit:
   port: 5672
   username: user
   password: password
+prometheus:
+  scrape: true

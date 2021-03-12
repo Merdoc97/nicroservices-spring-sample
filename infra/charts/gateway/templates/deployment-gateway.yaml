@@ -17,6 +17,10 @@ spec:
     metadata:
       labels:
         app: {{.Values.name}}
+      annotations:
+        prometheus.io/path: {{.Values.server.path}}/actuator/prometheus
+        prometheus.io/port: "{{ .Values.port }}"
+        prometheus.io/scrape: "{{ .Values.prometheus.scrape }}"
     spec:
       serviceAccountName: {{.Values.name}}
       containers:

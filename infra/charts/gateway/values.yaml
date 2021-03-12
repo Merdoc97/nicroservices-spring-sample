@@ -19,7 +19,8 @@ resources:
 actuator:
   showValues: ALWAYS
   path: /api/actuator
-
+prometheus:
+  scrape: true
 server:
   path: /api
 rabbit:
