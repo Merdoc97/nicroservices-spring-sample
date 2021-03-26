@@ -1,0 +1,10 @@
+@Library("jenkins-util")_
+
+generalCi(
+    branch: "jenkins-pipelines-example",
+    scmUrl: "git@github.com:Merdoc97/microservices-spring-sample.git",
+    mavenModule: "admin-dashboard/",
+    pathToAppChart: "/infra/charts/admin",
+    helmReleaseName: "admin",
+    kubernetesNameSpace: "microservice"
+)
