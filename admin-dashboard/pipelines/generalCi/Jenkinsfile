@@ -7,5 +7,5 @@ generalCi(
     pathToAppChart: "/infra/charts/admin",
     helmReleaseName: "admin",
     kubernetesNameSpace: "microservice",
-    generateReport: false
+    generateReport: true
 )
