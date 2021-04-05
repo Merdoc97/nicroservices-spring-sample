@@ -6,5 +6,6 @@ generalCi(
     mavenModule: "admin-dashboard/",
     pathToAppChart: "/infra/charts/admin",
     helmReleaseName: "admin",
-    kubernetesNameSpace: "microservice"
+    kubernetesNameSpace: "microservice",
+    generateReport: true
 )
