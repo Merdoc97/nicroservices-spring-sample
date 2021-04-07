@@ -1,0 +1,11 @@
+@Library("jenkins-util")_
+
+generalCi(
+    branch: "jenkins-pipelines-example",
+    scmUrl: "git@github.com:Merdoc97/microservices-spring-sample.git",
+    mavenModule: "customer-service/",
+    pathToAppChart: "/infra/charts/customer-service",
+    helmReleaseName: "customer-service",
+    kubernetesNameSpace: "microservice",
+    generateReport: true
+)
