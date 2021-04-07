@@ -1,4 +1,4 @@
-#helm install --namespace infra elasticsearch elastic/elasticsearch -f ./elasticsearch/values.yaml
+#helm install --namespace infra elasticsearch elastic/elasticsearch -f ./infra/charts/elasticsearch/values.yaml
 #helm install --namespace infra kibana elastic/kibana
 ---
 # Permit co-located instances for solitary minikube virtual machines.
@@ -15,7 +15,7 @@ resources:
     memory: "1024M"
   limits:
     cpu: "1000m"
-    memory: "1024M"
+    memory: "2048M"
 
 # Request smaller persistent volumes.
 volumeClaimTemplate:

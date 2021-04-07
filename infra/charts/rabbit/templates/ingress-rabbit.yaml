@@ -12,6 +12,6 @@ spec:
                 name: {{.Values.name}}
                 port:
                   number: {{.Values.resources.managementPort}}
-            path: /
+            path: /rabbit
             pathType: Prefix
 
