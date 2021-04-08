@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: prometheus-ext
+  namespace: infra
+spec:
+  type: LoadBalancer
+#  change by you cluster or dns name
+  externalIPs:
+    - 192.168.49.2
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+  selector:
+    app: prometheus
