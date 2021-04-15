@@ -1,3 +1,4 @@
+#helm repo add elastic https://helm.elastic.co
 #helm install --namespace infra elasticsearch elastic/elasticsearch -f ./infra/charts/elasticsearch/values.yaml
 #helm install --namespace infra kibana elastic/kibana
 ---

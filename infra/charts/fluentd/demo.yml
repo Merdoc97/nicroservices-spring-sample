@@ -1,0 +1,14 @@
+## counter.yaml
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: counter
+  labels:
+    app: demo
+    tag: microservice
+spec:
+  containers:
+    - name: count
+      image: busybox
+      args: [/bin/sh, -c, 'i=0; while true; do echo "{"type":"response","@timestamp":"$(date -u +%Y-%m-%dT%H:%M:%SZ)","tags":[],"pid":8,"method":"get","statusCode":200,"req":{"url":"/app/kibana","method":"get","headers":{"host":"localhost:5601","user-agent":"curl/7.61.1","accept":"*/*"},"remoteAddress":"127.0.0.1","userAgent":"curl/7.61.1"},"res":{"statusCode":200,"responseTime":28,"contentLength":127970},"message":"GET /app/kibana 200 28ms - 125.0KB"}"; i=$((i+1)); sleep 1; done']
