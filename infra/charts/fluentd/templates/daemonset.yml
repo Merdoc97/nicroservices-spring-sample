@@ -1,56 +1,21 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: fluentd
-  namespace: infra
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: fluentd
-  namespace: infra
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - pods
-      - namespaces
-    verbs:
-      - get
-      - list
-      - watch
----
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: fluentd
-roleRef:
-  kind: ClusterRole
-  name: fluentd
-  apiGroup: rbac.authorization.k8s.io
-subjects:
-  - kind: ServiceAccount
-    name: fluentd
-    namespace: infra
----
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: fluentd
-  namespace: infra
+  name: {{.Values.name}}
+  namespace: {{.Values.global.baseNamespace}}
   labels:
-    k8s-app: fluentd-logging
+    k8s-app: {{.Values.labels}}
     version: v1
     kubernetes.io/cluster-service: "true"
 spec:
   selector:
     matchLabels:
-      k8s-app: fluentd-logging
+      k8s-app: {{.Values.labels}}
       version: v1
   template:
     metadata:
       labels:
-        k8s-app: fluentd-logging
+        k8s-app: {{.Values.labels}}
         version: v1
         kubernetes.io/cluster-service: "true"
     spec:
@@ -60,15 +25,15 @@ spec:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
       containers:
-        - name: fluentd
-          image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
+        - name: {{.Values.name}}
+          image: "{{.Values.global.dockerRegistryUrl}}/{{.Values.image.repository}}:{{.Chart.AppVersion}}"
           env:
             - name:  FLUENT_ELASTICSEARCH_HOST
-              value: "elasticsearch-master"
+              value: {{.Values.elasticsearch.host |quote}}
             - name:  FLUENT_ELASTICSEARCH_PORT
-              value: "9200"
+              value: {{.Values.elasticsearch.port|quote}}
             - name: FLUENT_ELASTICSEARCH_SCHEME
-              value: "http"
+              value: {{.Values.elasticsearch.scheme|quote}}
 
           #            - name: FLUENT_ELASTICSEARCH_USER # even if not used they are necessary
 #              value: "elastic"
@@ -79,10 +44,10 @@ spec:
 #                  key: password
           resources:
             limits:
-              memory: 200Mi
+              memory: {{.Values.resources.memory}}
             requests:
-              cpu: 100m
-              memory: 200Mi
+              cpu: {{.Values.resources.cpu}}
+              memory: {{.Values.resources.memory}}
           volumeMounts:
             - name: varlog
               mountPath: /var/log
@@ -91,7 +56,7 @@ spec:
               readOnly: true
             - name: fluentd-config
               mountPath: /fluentd/etc # path of fluentd config file
-      terminationGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: {{.Values.gracePeriodSeconds}}
       volumes:
         - name: varlog
           hostPath:

@@ -22,11 +22,6 @@ spring:
         period: 5000
     discovery:
       enabled: false
-  rabbitmq:
-    host: localhost
-    username: user
-    password: password
-    port: 5672
   zipkin:
     compression:
       enabled: true
@@ -43,7 +38,7 @@ spring:
     messaging:
       enabled: true
       rabbit:
-        enabled: true
+        enabled: false
 management:
   endpoints:
     web:

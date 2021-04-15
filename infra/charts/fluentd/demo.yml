@@ -11,4 +11,4 @@ spec:
   containers:
     - name: count
       image: busybox
-      args: [/bin/sh, -c, 'i=0; while true; do echo "{\"type\":\"response\",\"tags\":[],\"pid\":8,\"method\":\"get\",\"statusCode\":200}"; i=$((i+1)); sleep 1; done']
+      args: [/bin/sh, -c, 'i=0; while true; do echo "{\"type\":\"response\",\"tags\":[],\"pid\":8,\"method\":\"get\",\"statusCode\":200,\"@timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}"; i=$((i+1)); sleep 1; done']

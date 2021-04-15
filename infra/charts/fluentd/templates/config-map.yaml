@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fluentd-config
-  namespace: infra
+  namespace: {{.Values.global.baseNamespace}}
 data:
   fluent.conf: |
     <match fluent.**>
@@ -18,7 +18,6 @@ data:
       read_from_head true
       <parse>
         @type json
-        time_format %Y-%m-%dT%H:%M:%S.%NZ
       </parse>
     </source>
     <filter kubernetes.**>
@@ -32,25 +31,24 @@ data:
             tag $1.${tag}
         </rule>
     </match>
-    <filter default.**>
+    <filter {{.Values.nameSpaceFiltering}}.**>
       @type parser
       format json
       key_name log
       reserve_data true
       remove_key_name_field true
-
       <parse>
         @type json
       </parse>
     </filter>
 
-    <filter default.**>
+    <filter {{.Values.nameSpaceFiltering}}.**>
       @type record_modifier
       remove_keys log
     </filter>
     # we use kubernetes metadata plugin to add metadatas to the log
      # we send the logs to Elasticsearch
-    <match default.**>
+    <match {{.Values.nameSpaceFiltering}}.**>
            @type elasticsearch_dynamic
            include_tag_key true
            host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"
@@ -64,17 +62,17 @@ data:
            logstash_prefix kubernetes-${record['kubernetes']['namespace_name']}
            #Uncomment the below line, if want to isolate the indexes as per different pods in K8s.
            #logstash_prefix kubernetes-${record['kubernetes']['pod_name']}
-           #<buffer>
-               #@type file
-               #path /var/log/fluentd-buffers/kubernetes.system.buffer
-               #flush_mode interval
-               #retry_type exponential_backoff
-               #flush_thread_count 2
-               #flush_interval 5s
-               #retry_forever true
-               #retry_max_interval 30
-               #chunk_limit_size 2M
-               #queue_limit_length 32
-               #overflow_action block
-           #</buffer>
+           <buffer>
+               @type file
+               path /var/log/fluentd-buffers/kubernetes.system.buffer
+               flush_mode interval
+               retry_type exponential_backoff
+               flush_thread_count 2
+               flush_interval 5s
+               retry_forever true
+               retry_max_interval 30
+               chunk_limit_size 2M
+               queue_limit_length 32
+               overflow_action block
+           </buffer>
         </match>

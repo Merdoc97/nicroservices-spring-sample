@@ -1,0 +1,16 @@
+global:
+  baseNamespace: infra
+  dockerRegistryUrl: fluent
+name: fluentd-microservice
+image:
+  repository: fluentd-kubernetes-daemonset
+labels: fluentd-logging
+resources:
+  memory: 200Mi
+  cpu: 100m
+elasticsearch:
+  host: elasticsearch-master
+  port: 9200
+  scheme: http
+gracePeriodSeconds: 5
+nameSpaceFiltering: microservice

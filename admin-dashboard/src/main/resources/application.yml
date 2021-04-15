@@ -11,13 +11,14 @@ management:
       show-details: ALWAYS
 
 spring:
+  profiles:
+    active: jsonLogs
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
           url-expression: "'http://'+serviceId"
-
     kubernetes:
       discovery:
         enabled: false
@@ -39,3 +40,5 @@ spring:
       name: user
       password: password
       roles: ACTUATOR
+  zipkin:
+    enabled: false

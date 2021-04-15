@@ -21,20 +21,14 @@ actuator:
   path: /actuator
 server:
   path: /
-logstash:
-  location: logstash.infra:5044
+
 zipkin:
-  enabled: true
+  enabled: false
   url: zipkin.infra
   port: 9411
 sleuth:
-  enabled: true
+  enabled: false
   messaging:
-    enabled: true
-rabbit:
-  host: rabbit.infra
-  port: 5672
-  username: user
-  password: password
+    enabled: false
 prometheus:
   scrape: true
