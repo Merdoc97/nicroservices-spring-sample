@@ -22,15 +22,35 @@ data:
       </parse>
     </source>
     <filter kubernetes.**>
-         @type kubernetes_metadata
-         format json
-         #time_format %Y-%m-%dT%H:%M:%SZ
-         #key_name log
-         #reserve_data true
-     </filter>
+      @type kubernetes_metadata
+    </filter>
+    <match kubernetes.**>
+        @type rewrite_tag_filter
+        <rule>
+            key $['kubernetes']['namespace_name']
+            pattern ^(.+)$
+            tag $1.${tag}
+        </rule>
+    </match>
+    <filter default.**>
+      @type parser
+      format json
+      key_name log
+      reserve_data true
+      remove_key_name_field true
+
+      <parse>
+        @type json
+      </parse>
+    </filter>
+
+    <filter default.**>
+      @type record_modifier
+      remove_keys log
+    </filter>
     # we use kubernetes metadata plugin to add metadatas to the log
      # we send the logs to Elasticsearch
-    <match kubernetes.** >
+    <match default.**>
            @type elasticsearch_dynamic
            include_tag_key true
            host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"
