@@ -8,16 +8,13 @@ data:
     spring.security.user.name: {{.Values.username}}
     spring.security.user.password: {{.Values.password}}
     spring.security.user.roles: {{.Values.role}}
-    spring.profiles.active: stash
+    spring.profiles.active: jsonLogs
     server.port: {{.Values.port }}
     spring.cloud.kubernetes.discovery.enabled: {{.Values.discoveryEnabled }}
     spring.application.name: {{.Values.name}}
     management.endpoints.web.base-path: /actuator
     management.endpoint.health.show-details: {{.Values.actuator.showValues}}
     server.servlet.context-path: {{.Values.server.path}}
-    spring.rabbitmq.host: {{.Values.rabbit.host}}
-    spring.rabbitmq.username: {{.Values.rabbit.username}}
-    spring.rabbitmq.password: {{.Values.rabbit.password}}
     spring.zipkin.enabled: {{.Values.zipkin.enabled}}
     spring.sleuth.messaging.enabled: {{.Values.sleuth.messaging.enabled}}
     spring.sleuth.messaging.rabbit.enabled: {{.Values.sleuth.messaging.enabled}}

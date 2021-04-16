@@ -12,5 +12,5 @@ elasticsearch:
   host: elasticsearch-master
   port: 9200
   scheme: http
-gracePeriodSeconds: 5
+gracePeriodSeconds: 1
 nameSpaceFiltering: microservice

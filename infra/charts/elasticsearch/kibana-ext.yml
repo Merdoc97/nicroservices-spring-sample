@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kibana-ext
+  namespace: infra
+  labels:
+    app: kibana-ext
+  annotations:
+    meta.helm.sh/release-name: kibana
+    meta.helm.sh/release-namespace: infra
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 5601
+      targetPort: 5601
+  selector:
+    app: kibana
+    release: kibana
+  type: LoadBalancer
+

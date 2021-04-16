@@ -12,6 +12,7 @@
     </appender>
 
     <appender name="STDOUT_JSON" class="ch.qos.logback.core.ConsoleAppender">
+
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <mdc/> <!-- MDC variables on the Thread will be written as JSON fields -->
@@ -48,12 +49,18 @@
     </appender>
 
     <springProfile name="jsonLogs">
+        <logger name="org.zalando.logbook.Logbook" level="debug" additivity="false">
+            <appender-ref ref="STDOUT_JSON"/>
+        </logger>
         <root level="INFO">
             <appender-ref ref="STDOUT_JSON"/>
         </root>
     </springProfile>
 
     <springProfile name="!jsonLogs">
+        <logger name="org.zalando.logbook.Logbook" level="debug" additivity="false">
+            <appender-ref ref="STDOUT"/>
+        </logger>
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
         </root>

@@ -46,9 +46,17 @@ data:
       @type record_modifier
       remove_keys log
     </filter>
+    <match {{.Values.nameSpaceFiltering}}.**>
+        @type rewrite_tag_filter
+        <rule>
+            key $.kubernetes.labels.logsType
+            pattern /^json$/
+            tag json.${tag}
+        </rule>
+    </match>
     # we use kubernetes metadata plugin to add metadatas to the log
      # we send the logs to Elasticsearch
-    <match {{.Values.nameSpaceFiltering}}.**>
+    <match json.{{.Values.nameSpaceFiltering}}.**>
            @type elasticsearch_dynamic
            include_tag_key true
            host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"

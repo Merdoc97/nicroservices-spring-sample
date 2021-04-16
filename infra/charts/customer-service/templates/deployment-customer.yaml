@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         app: {{.Values.name}}
+        logsType: json
       annotations:
         prometheus.io/path: /actuator/prometheus
         prometheus.io/port: "{{ .Values.port }}"
