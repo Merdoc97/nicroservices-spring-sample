@@ -1,0 +1,2 @@
+helm install --namespace infra postgres-exporter prometheus-community/prometheus-postgres-exporter -f infra/charts/prometheus/postgres/values.yml --version 2.2.0
+helm install --namespace infra postgres bitnami/postgresql

@@ -13,6 +13,7 @@ metadata:
     management.context-path: {{.Values.actuator.path}}
 spec:
   type: ClusterIP
+
   ports:
     - port: {{ .Values.port }}
   selector:

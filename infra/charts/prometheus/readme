@@ -1,1 +1,2 @@
-helm install prometheus prometheus-community/prometheus --namespace infra
+helm install prometheus prometheus-community/prometheus --namespace infra --version 13.6.0
+github https://github.com/prometheus-community/helm-charts/tree/prometheus-13.6.0
