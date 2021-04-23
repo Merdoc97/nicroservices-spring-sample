@@ -7,8 +7,6 @@ feign:
     enabled: true
 
 spring:
-  profiles:
-    include: jsonLogs
   application:
     name: customer-service
   security:
