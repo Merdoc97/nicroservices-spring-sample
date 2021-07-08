@@ -1,7 +1,7 @@
 info:
   component: ${spring.application.name}
 server:
-  port: ${PORT:3334}
+  port: ${PORT:3335}
 
 spring:
   application:
@@ -11,6 +11,7 @@ spring:
       name: user
       password: password
       roles: ACTUATOR
+
   cloud:
     kubernetes:
       reload:
@@ -18,7 +19,7 @@ spring:
         mode: polling
         period: 5000
     discovery:
-      enabled: true
+      enabled: false
   rabbitmq:
     host: localhost
     username: user
@@ -29,6 +30,7 @@ spring:
       enabled: true
     base-url: http://localhost:9411
     enabled: true
+
     service:
       name: ${spring.application.name}
     sender:
@@ -40,7 +42,12 @@ spring:
     messaging:
       enabled: true
       rabbit:
-        enabled: true
+        enabled: false
+
+opentracing:
+  jaeger:
+    enabled: false
+
 
 ribbon:
   eureka:

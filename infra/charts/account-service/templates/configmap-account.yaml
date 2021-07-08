@@ -21,3 +21,4 @@ data:
     spring.rabbitmq.host: {{.Values.rabbit.host}}
     spring.rabbitmq.username: {{.Values.rabbit.username}}
     spring.rabbitmq.password: {{.Values.rabbit.password}}
+    opentracing.jaeger.enabled: false

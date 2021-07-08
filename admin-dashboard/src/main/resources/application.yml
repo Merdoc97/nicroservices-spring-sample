@@ -10,7 +10,6 @@ management:
     health:
       show-details: ALWAYS
 
-
 spring:
   cloud:
     gateway:
@@ -40,3 +39,12 @@ spring:
       name: user
       password: password
       roles: ACTUATOR
+opentracing:
+  jaeger:
+    enabled: true
+
+    udp-sender:
+      port: 6831
+
+
+

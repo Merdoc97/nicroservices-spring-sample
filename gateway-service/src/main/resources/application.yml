@@ -51,27 +51,12 @@ spring:
       name: user
       password: password
       roles: ACTUATOR
-  rabbitmq:
-    host: localhost
-    username: user
-    password: password
-  zipkin:
-    compression:
-      enabled: true
-    base-url: http://localhost:9411
-    enabled: true
-    service:
-      name: ${spring.application.name}
-    sender:
-      type: rabbit
-    encoder: json_v1
+opentracing:
+  jaeger:
+    enabled: false
+    udp-sender:
+      port: 6831
+    log-spans: true
 
-  sleuth:
-    sampler:
-      probability: 1.0
-    messaging:
-      enabled: false
-      rabbit:
-        enabled: false
 
 
