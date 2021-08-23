@@ -5,7 +5,7 @@ server:
 
 spring:
   profiles:
-    include: jsonLogs
+#    include: jsonLogs
   application:
     name: account-service
   security:
@@ -20,12 +20,12 @@ spring:
         mode: polling
         period: 5000
     discovery:
-      enabled: true
+      enabled: false
   zipkin:
     compression:
       enabled: true
     base-url: http://localhost:9411
-    enabled: true
+    enabled: false
     service:
       name: ${spring.application.name}
     sender:
@@ -35,9 +35,9 @@ spring:
     sampler:
       probability: 1.0
     messaging:
-      enabled: true
+      enabled: false
       rabbit:
-        enabled: true
+        enabled: false
 
 ribbon:
   eureka:

@@ -9,12 +9,8 @@ import pl.piomin.microservices.account.exceptions.AccountNotFoundException;
 import pl.piomin.microservices.account.model.Account;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
 
 @RestController
 @RequestMapping("/accounts")
@@ -49,7 +45,7 @@ public class Api {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Account> findAll() {
         log.info("Account.findAll()");
         return accounts;

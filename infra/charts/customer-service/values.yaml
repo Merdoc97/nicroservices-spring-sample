@@ -3,7 +3,7 @@ global:
   dockerRegistryUrl: localhost:5000
   hostName: microservice-host
 name: customer-service
-replicaCount: 2
+replicaCount: 1
 port: 8080
 image:
   repository: customer-service

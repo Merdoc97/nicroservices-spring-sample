@@ -12,6 +12,7 @@ import pl.piomin.microservices.customer.model.Account;
 import pl.piomin.microservices.customer.model.Customer;
 import pl.piomin.microservices.customer.model.CustomerType;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -37,8 +38,9 @@ public class Api {
     }
 
     @GetMapping()
-    public List<Customer> findAll() {
+    public List<Customer> findAll(HttpServletRequest request) {
         log.info("Customer.findAll()");
+        log.info("request header {}", request.getHeader("Authorization"));
         return customers;
     }
 

@@ -4,17 +4,47 @@ metadata:
   name: gateway-config
   namespace: {{.Values.global.baseNamespace}}
 data:
-  config.properties: |
-    spring.security.user.name: {{.Values.username}}
-    spring.security.user.password: {{.Values.password}}
-    spring.security.user.roles: {{.Values.role}}
-    spring.profiles.active: jsonLogs
-    server.port: {{.Values.port }}
-    spring.cloud.kubernetes.discovery.enabled: {{.Values.discoveryEnabled }}
-    spring.application.name: {{.Values.name}}
-    management.endpoints.web.base-path: /actuator
-    management.endpoint.health.show-details: {{.Values.actuator.showValues}}
-    server.servlet.context-path: {{.Values.server.path}}
-    spring.zipkin.enabled: {{.Values.zipkin.enabled}}
-    spring.sleuth.messaging.enabled: {{.Values.sleuth.messaging.enabled}}
-    spring.sleuth.messaging.rabbit.enabled: {{.Values.sleuth.messaging.enabled}}
+  config.yaml: |
+    server:
+      port: {{.Values.port }}
+      servlet:
+        context-path: {{.Values.server.path}}
+    spring:
+      application:
+        name: {{.Values.name}}
+      sleuth:
+        messaging:
+          enabled: {{.Values.sleuth.messaging.enabled}}
+          rabbit:
+            enabled: {{.Values.sleuth.messaging.enabled}}
+      zipkin:
+        enabled: {{.Values.zipkin.enabled}}
+      cloud:
+        gateway:
+          enabled: true
+          discovery:
+            locator:
+              enabled: false
+          routes:
+            - id: customer-service
+              uri: http://customer-service:8080
+              predicates:
+                - Path=/api/customer/**
+              filters:
+                - RewritePath=/api/customer/(?<segment>.*), /$\{segment}
+            - id: account-service
+              uri: http://account-service:8080
+              predicates:
+                - Path=/api/account/**
+              filters:
+                - RewritePath=/api/account/(?<segment>.*), /$\{segment}
+        kubernetes:
+          discovery:
+            enabled: {{.Values.discoveryEnabled }}
+    management:
+      endpoints:
+        web:
+          base-path: /api/actuator
+      endpoint:
+        health:
+          show-details: {{.Values.actuator.showValues}}
