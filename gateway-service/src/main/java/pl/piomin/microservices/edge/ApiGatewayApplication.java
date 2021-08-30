@@ -15,12 +15,5 @@ public class ApiGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
-/*	@Bean
-    public JaegerGrpcSpanExporter jaegerExporter() {
-        return JaegerGrpcSpanExporter.newBuilder()
-                .setEndpoint("127.0.0.1:14250")
-//                .setServiceName("api-gateway")
-                .build();
-    }*/
 
 }

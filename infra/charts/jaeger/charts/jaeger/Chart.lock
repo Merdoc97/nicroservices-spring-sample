@@ -1,0 +1,6 @@
+dependencies:
+- name: cassandra
+  repository: https://charts.helm.sh/incubator
+  version: 0.15.3
+digest: sha256:e4ba5d21716c6615abe23573a9dc895437c9e74763aa5c4fbe80d8ffe3db43a6
+generated: "2021-08-30T14:24:48.9213071+03:00"

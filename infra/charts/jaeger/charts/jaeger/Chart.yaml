@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: 1.22.0
+description: A Jaeger Helm chart for Kubernetes
+name: jaeger
+type: application
+version: 0.46.0
+keywords:
+  - jaeger
+  - opentracing
+  - tracing
+  - instrumentation
+home: https://jaegertracing.io
+dependencies:
+  - name: cassandra
+    version: 0.15.3
+

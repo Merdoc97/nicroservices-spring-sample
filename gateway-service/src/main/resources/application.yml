@@ -53,7 +53,7 @@ spring:
       roles: ACTUATOR
 opentracing:
   jaeger:
-    enabled: false
+    enabled: true
     udp-sender:
       port: 6831
     log-spans: true
