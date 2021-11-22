@@ -8,5 +8,6 @@ releaseDockerAndHelmCi(
     helmReleaseName: "api-gateway",
     kubernetesNameSpace: "microservice",
     generateReport: true,
-    useSonar: false
+    useSonar: false,
+    tagOnly: true
 )
