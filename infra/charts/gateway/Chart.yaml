@@ -3,6 +3,6 @@ name: gateway
 description: A Helm chart for Gateway Zuul Service
 kubeVersion: '>=1.15.3'
 type: application
-version: '1.24'
-appVersion: a7a094f
+version: '1.28'
+appVersion: f645380
 dependencies: []
