@@ -43,13 +43,13 @@ spring:
           lower-case-service-id: false
       routes:
         - id: customer-service
-          uri: http://customer-service:8080
+          uri: http://localhost:3333
           predicates:
             - Path=/api/customers/**
           filters:
             - RewritePath=/api/customers/(?<segment>.*), /$\{segment}
         - id: account-service
-          uri: http://account-service:8080
+          uri: http://localhost:3334
           predicates:
             - Path=/api/accounts/**
           filters:
