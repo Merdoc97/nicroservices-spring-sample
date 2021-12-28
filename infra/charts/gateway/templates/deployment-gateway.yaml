@@ -38,7 +38,7 @@ spec:
               memory: {{ .Values.resources.memory }}
           env:
             - name: SPRING_CONFIG_LOCATION
-              value: '/configs/config.yml,classpath:/'
+              value: 'classpath:/,/configs/config.yml'
             - name: JAVA_TOOL_OPTIONS
               value: {{ .Values.resources.java.opts }}
           ports:
