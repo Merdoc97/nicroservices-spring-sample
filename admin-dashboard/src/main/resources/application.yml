@@ -11,6 +11,8 @@ management:
       show-details: ALWAYS
 
 spring:
+  application:
+    name: admin
   cloud:
     gateway:
       discovery:

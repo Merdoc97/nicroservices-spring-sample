@@ -9,15 +9,11 @@ import pl.piomin.microservices.account.exceptions.AccountNotFoundException;
 import pl.piomin.microservices.account.model.Account;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
-
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/")
 @Slf4j
 public class Api {
     private final List<Account> accounts = new ArrayList<>();

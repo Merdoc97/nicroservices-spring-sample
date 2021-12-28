@@ -1,4 +1,4 @@
-FROM openjdk:13.0.2-slim
+FROM openjdk:17.0.1-slim
 VOLUME /properties
 VOLUME /logdir
 ARG JAR_FILE

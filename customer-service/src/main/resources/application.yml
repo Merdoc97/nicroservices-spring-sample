@@ -5,7 +5,11 @@ server:
 feign:
   hystrix:
     enabled: true
-
+  circuitbreaker:
+    enabled: true
+feign-clients:
+  account-service:
+    url: http://localhost:3334
 spring:
   application:
     name: customer-service
@@ -17,16 +21,21 @@ spring:
   cloud:
     kubernetes:
       reload:
-        enabled: true
+        enabled: false
         mode: polling
         period: 5000
+      loadbalancer:
+        enabled: false
     discovery:
       enabled: false
+
   rabbitmq:
     host: localhost
     username: user
     password: password
     port: 5672
+
+
   zipkin:
     compression:
       enabled: true
@@ -35,7 +44,7 @@ spring:
     service:
       name: ${spring.application.name}
     sender:
-      type: rabbit
+      type: web
     encoder: json_v2
   sleuth:
     sampler:
@@ -43,18 +52,18 @@ spring:
     messaging:
       enabled: true
       rabbit:
-        enabled: true
+        enabled: false
 management:
   endpoints:
     web:
       exposure:
-#      new feature most endpoints from http layer not allowed
+#      new feature most end..points from http layer not allowed
         include: '*'
       base-path: /actuator
+  endpoint:
+    health:
+      show-detail: true
+      show-components: always
   metrics:
     enable:
       all: true
-  endpoint:
-    hystrix:
-      stream:
-        enabled: false

@@ -3,3 +3,6 @@ management:
     export:
       prometheus:
         enabled: false
+spring:
+  application:
+    name: admin

@@ -1,5 +1,4 @@
-FROM openjdk:13.0.2-slim
-VOLUME /properties
+FROM openjdk:17.0.1-slim
 VOLUME /logdir
 ARG JAR_FILE
 ENV APP_NAME=${JAR_FILE}

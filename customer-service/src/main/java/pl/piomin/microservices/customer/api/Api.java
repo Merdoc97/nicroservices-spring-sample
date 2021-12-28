@@ -15,7 +15,7 @@ import pl.piomin.microservices.customer.model.CustomerType;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/")
 @Slf4j
 @RequiredArgsConstructor
 public class Api {
