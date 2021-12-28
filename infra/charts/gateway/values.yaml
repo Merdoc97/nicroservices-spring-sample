@@ -38,3 +38,10 @@ sleuth:
   enabled: true
   messaging:
     enabled: true
+services:
+  accountService:
+    url: http://account-service
+    port: 8080
+  customerService:
+    url: http://customer-service
+    port: 8080

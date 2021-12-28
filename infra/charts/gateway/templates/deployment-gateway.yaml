@@ -41,6 +41,10 @@ spec:
               value: 'classpath:/,/configs/config.yml'
             - name: JAVA_TOOL_OPTIONS
               value: {{ .Values.resources.java.opts }}
+            - name: ACCOUNT_SERVICE_URL
+              value: {{.Values.services.accountService.url}}:{{.Values.services.accountService.port}}
+            - name: CUSTOMER_SERVICE_URL
+              value: {{.Values.services.customerService.url}}:{{.Values.services.customerService.port}}
           ports:
             - containerPort: {{.Values.port}}
       volumes:
