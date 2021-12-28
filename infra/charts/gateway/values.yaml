@@ -18,7 +18,7 @@ resources:
     opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
 actuator:
   showValues: ALWAYS
-  path: /api/actuator
+  path: /actuator
 prometheus:
   scrape: true
 server:
