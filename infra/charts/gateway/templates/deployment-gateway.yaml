@@ -28,8 +28,8 @@ spec:
           image: "{{ $.Values.global.dockerRegistryUrl}}/{{.Values.image.repository}}:{{.Chart.AppVersion}}"
           volumeMounts:
             - name: config-volume
-              mountPath: /configs/config.properties
-              subPath: config.properties
+              mountPath: /configs/config.yml
+              subPath: config.yml
           imagePullPolicy: Always
           resources:
             requests:
@@ -38,7 +38,7 @@ spec:
               memory: {{ .Values.resources.memory }}
           env:
             - name: SPRING_CONFIG_LOCATION
-              value: 'classpath:/,/configs/config.properties'
+              value: 'classpath:/,/configs/config.yml'
             - name: JAVA_TOOL_OPTIONS
               value: {{ .Values.resources.java.opts }}
           ports:

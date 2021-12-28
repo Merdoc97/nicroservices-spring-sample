@@ -4,20 +4,55 @@ metadata:
   name: gateway-config
   namespace: {{.Values.global.baseNamespace}}
 data:
-  config.properties: |
-    spring.security.user.name: {{.Values.username}}
-    spring.security.user.password: {{.Values.password}}
-    spring.security.user.roles: {{.Values.role}}
-    spring.profiles.active: stash
-    server.port: {{.Values.port }}
-    spring.cloud.kubernetes.discovery.enabled: {{.Values.discoveryEnabled }}
-    spring.application.name: {{.Values.name}}
-    management.endpoints.web.base-path: /actuator
-    management.endpoint.health.show-details: {{.Values.actuator.showValues}}
-    server.servlet.context-path: {{.Values.server.path}}
-    spring.rabbitmq.host: {{.Values.rabbit.host}}
-    spring.rabbitmq.username: {{.Values.rabbit.username}}
-    spring.rabbitmq.password: {{.Values.rabbit.password}}
-    spring.zipkin.enabled: {{.Values.zipkin.enabled}}
-    spring.sleuth.messaging.enabled: {{.Values.sleuth.messaging.enabled}}
-    spring.sleuth.messaging.rabbit.enabled: {{.Values.sleuth.messaging.enabled}}
+  config.yml: |
+    spring:
+      application:
+        name: {{.Values.name}}
+      profiles:
+        active: stash
+      security:
+        user:
+          name: {{.Values.username}}
+          password: {{.Values.password}}
+          roles: {{.Values.role}}
+      cloud:
+        kubernetes:
+          discovery:
+            enabled: {{.Values.discoveryEnabled }}
+      rabbitmq:
+        host: {{.Values.rabbit.host}}
+        username: {{.Values.rabbit.username}}
+        password: {{.Values.rabbit.password}}
+      zipkin:
+        enabled: {{.Values.zipkin.enabled}}
+      sleuth:
+        messaging:
+          enabled: {{.Values.sleuth.messaging.enabled}}
+          rabbit:
+            enabled: {{.Values.sleuth.messaging.enabled}}
+      gateway:
+        enabled: true
+        routes:
+          - id: customer-service
+            uri: http://customer-service:8080
+            predicates:
+              - Path=/api/customers/**
+            filters:
+              - RewritePath=/api/customers/(?<segment>.*), /$\{segment}
+          - id: account-service
+            uri: http://account-service:8080
+            predicates:
+              - Path=/api/accounts/**
+            filters:
+              - RewritePath=/api/accounts/(?<segment>.*), /$\{segment}
+    server:
+      port: {{.Values.port }}
+      servlet:
+        context-path: {{.Values.server.path}}
+    management:
+      endpoints:
+        web:
+          base-path: /actuator
+      endpoint:
+        health:
+          show-details: {{.Values.actuator.showValues}}
