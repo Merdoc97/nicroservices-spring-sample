@@ -22,7 +22,7 @@ actuator:
 prometheus:
   scrape: true
 server:
-  path: /api
+  path: /
 rabbit:
   host: rabbit.infra
   port: 5672
