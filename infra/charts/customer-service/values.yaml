@@ -38,3 +38,7 @@ rabbit:
   password: password
 prometheus:
   scrape: true
+feign:
+  account:
+    serviceName: account-service
+    port: 8080

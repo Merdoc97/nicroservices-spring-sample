@@ -7,7 +7,7 @@ import pl.piomin.microservices.customer.model.Account;
 
 import java.util.List;
 
-@FeignClient(value = "account-service", url = "http://localhost:3334", fallback = AccountFallback.class)
+@FeignClient(value = "account-service", url = "${feign-clients.account-service.url}", fallback = AccountFallback.class)
 public interface AccountClient {
 
     @GetMapping(value = "/customer/{customerId}")

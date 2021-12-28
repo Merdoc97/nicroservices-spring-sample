@@ -21,3 +21,4 @@ data:
     spring.rabbitmq.host: {{.Values.rabbit.host}}
     spring.rabbitmq.username: {{.Values.rabbit.username}}
     spring.rabbitmq.password: {{.Values.rabbit.password}}
+    feign-clients.account-service.url: http://{{.Values.feign.account.serviceName}}:{{.Values.feign.account.port}}
