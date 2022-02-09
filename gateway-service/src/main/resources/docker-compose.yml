@@ -1,0 +1,10 @@
+version: '3'
+services:
+  flyway:
+    image: flyway/flyway:8.4.4-alpine
+    command: -url=jdbc:postgresql://localhost:5432/test_helm_hooks -schemas=public -user=$POSTGRES_USER_NAME -password=POSTGRES_PASSWORD -connectRetries=1 migrate
+    volumes:
+      - .db/migration:/flyway/sql
+    environment:
+      - POSTGRES_USER_NAME=postgres
+      - POSTGRES_PASSWORD=postgres
