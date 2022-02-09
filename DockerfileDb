@@ -1,6 +1,5 @@
 FROM flyway/flyway:8.4.4-alpine
-ARG module_name
-COPY $module_name/target/classes/db/migration /flyway/sql
+COPY /target/classes/db/migration /flyway/sql
 ENV JDBC_URL=""
 ENV SCHEMA=""
 ENV POSTGRES_USER=""
