@@ -3,7 +3,8 @@ kind: Pod
 metadata:
   name: {{.Values.name}}-db-hook
   annotations:
-    "helm.sh/hook": "pre-upgrade,pre-install"
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "0"
 spec:
   containers:
     - name: hook-container
