@@ -1,7 +1,7 @@
 @Library("jenkins-util")_
 
 generalCiWithHelmHooks(
-    branch: "jenkins-pipelines-example",
+    branch: "helm-preinstall-preupgrade-hooks-example",
     scmUrl: "git@github.com:Merdoc97/microservices-spring-sample.git",
     mavenModule: "gateway-service/",
     pathToAppChart: "/infra/charts/gateway",
