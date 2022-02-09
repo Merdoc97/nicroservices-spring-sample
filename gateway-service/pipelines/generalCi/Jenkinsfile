@@ -1,11 +1,13 @@
 @Library("jenkins-util")_
 
-generalCi(
+generalCiWithHelmHooks(
     branch: "jenkins-pipelines-example",
     scmUrl: "git@github.com:Merdoc97/microservices-spring-sample.git",
     mavenModule: "gateway-service/",
     pathToAppChart: "/infra/charts/gateway",
     helmReleaseName: "api-gateway",
     kubernetesNameSpace: "microservice",
-    generateReport: true
+    generateReport: true,
+    dockerHookFile: "DockerfileDb",
+    hookArgName: "module_name"
 )

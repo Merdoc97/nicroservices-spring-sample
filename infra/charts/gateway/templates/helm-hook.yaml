@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{.Values.name}}-db-hook
+  annotations:
+    "helm.sh/hook": "pre-upgrade,pre-install"
+spec:
+  containers:
+    - name: hook-container
+      image: "{{ $.Values.global.dockerRegistryUrl}}/{{.Values.image.repository}}-db-hook:{{.Chart.AppVersion}}"
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: JDBC_URL
+          value: {{.Values.datasource.jdbcUrl}}
+        - name: SCHEMA
+          value: {{.Values.datasource.schema}}
+        - name: POSTGRES_USER
+          valueFrom:
+             secretKeyRef:
+                name: postgres-secrets
+                key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: password
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0

@@ -38,3 +38,6 @@ sleuth:
   enabled: true
   messaging:
     enabled: true
+datasource:
+  jdbcUrl: jdbc:postgresql://postgres-postgresql.infra:5432/test_helm_hooks
+  schema: public
