@@ -3,7 +3,7 @@ global:
   dockerRegistryUrl: localhost:5000
   hostName: microservice-host
 name: gateway-service
-replicaCount: 1
+replicaCount: 2
 port: 8080
 image:
   repository: gateway-service

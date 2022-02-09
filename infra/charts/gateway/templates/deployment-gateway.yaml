@@ -22,6 +22,7 @@ spec:
         prometheus.io/port: "{{ .Values.port }}"
         prometheus.io/scrape: "{{ .Values.prometheus.scrape }}"
     spec:
+
       serviceAccountName: {{.Values.name}}
       containers:
         - name: {{.Values.name}}
@@ -43,6 +44,12 @@ spec:
               value: {{ .Values.resources.java.opts }}
           ports:
             - containerPort: {{.Values.port}}
+{{/*      initContainers:*/}}
+{{/*        - name: init-container-test*/}}
+{{/*          image: "{{ $.Values.global.dockerRegistryUrl}}/{{.Values.image.repository}}:{{.Chart.AppVersion}}"*/}}
+{{/*          imagePullPolicy: IfNotPresent*/}}
+{{/*          command: [sh', '-c', "echo start init container"]*/}}
+{{/*          stdinOnce: true*/}}
       volumes:
         - name: config-volume
           configMap:
