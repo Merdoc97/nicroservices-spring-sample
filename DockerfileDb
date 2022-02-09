@@ -6,4 +6,3 @@ ENV SCHEMA=""
 ENV POSTGRES_USER=""
 ENV POSTGRES_PASSWORD=""
 ENTRYPOINT [ "sh", "-c", "flyway -url=${JDBC_URL} -schemas=${SCHEMA} -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} -connectRetries=2 migrate" ]
-
