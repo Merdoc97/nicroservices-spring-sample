@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         }
         body.put("reason", responseStatusException.getReason());
         body.putIfAbsent("error", responseStatusException.getMessage());
-        return ResponseEntity.status(responseStatusException.getStatus())
+        return ResponseEntity.status(responseStatusException.getStatusCode())
                 .body(body);
     }
 }

@@ -1,13 +1,15 @@
 package pl.piomin.microservices.admin.security;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
-import io.netty.handler.codec.http.HttpMethod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -15,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import java.util.UUID;
 
 @Configuration(proxyBeanMethods = false)
-public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class AdminSecurityConfiguration {
 
     @Value("${spring.security.user.name}")
     private String userName;
@@ -30,19 +32,19 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.adminServer = adminServer;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain configure(HttpSecurity http) throws Exception {
         // @formatter:off
         SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl(this.adminServer.path("/"));
 
-        http.authorizeRequests()
-                .antMatchers(this.adminServer.path("/assets/**")).permitAll()
-                .antMatchers(this.adminServer.path("/login")).permitAll()
-                .antMatchers(this.adminServer.path("/actuator/prometheus")).permitAll()
-                .anyRequest().authenticated()
-                .and()
+        http.authorizeHttpRequests(auth->auth
+                        .requestMatchers(this.adminServer.path("/assets/**")).permitAll()
+                        .requestMatchers(this.adminServer.path("/login")).permitAll()
+                        .requestMatchers(this.adminServer.path("/logout")).permitAll()
+                        .requestMatchers(this.adminServer.path("/actuator/prometheus")).permitAll()
+                        .anyRequest().authenticated())
                 .formLogin().loginPage(this.adminServer.path("/login")).successHandler(successHandler).and()
                 .logout().logoutUrl(this.adminServer.path("/logout")).and()
                 .httpBasic()
@@ -57,10 +59,11 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe().key(UUID.randomUUID().toString()).tokenValiditySeconds(1209600);
         // @formatter:on
+        return http.build();
     }
 
     // Required to provide UserDetailsService for "remember functionality"
-    @Override
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())

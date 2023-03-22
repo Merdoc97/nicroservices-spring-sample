@@ -51,7 +51,7 @@ management:
     web:
       exposure:
         #      new feature most endpoints from http layer not allowed
-        include: '*'
+        include: "*"
   endpoint:
     hystrix:
       stream:
