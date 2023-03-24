@@ -8,7 +8,7 @@ data:
     spring.security.user.name: {{.Values.username}}
     spring.security.user.password: {{.Values.password}}
     spring.security.user.roles: {{.Values.role}}
-    spring.profiles.active: stash
+    spring.profiles.active: ${{.Values.profile}}
     server.port: {{.Values.port }}
     spring.cloud.kubernetes.discovery.enabled: {{.Values.discoveryEnabled }}
     spring.application.name: {{.Values.name}}

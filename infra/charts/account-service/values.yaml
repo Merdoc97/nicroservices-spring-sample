@@ -38,3 +38,4 @@ rabbit:
   password: password
 prometheus:
   scrape: true
+profile: stdout

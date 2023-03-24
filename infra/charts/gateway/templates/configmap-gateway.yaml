@@ -9,7 +9,7 @@ data:
       application:
         name: {{.Values.name}}
       profiles:
-        active: stash
+        active: {{ .Values.profile }}
       security:
         user:
           name: {{.Values.username}}

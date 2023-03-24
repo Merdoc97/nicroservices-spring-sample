@@ -45,3 +45,4 @@ services:
   customerService:
     url: http://customer-service
     port: 8080
+profile: stdout

@@ -42,3 +42,4 @@ feign:
   account:
     serviceName: account-service
     port: 8080
+profile: stdout
