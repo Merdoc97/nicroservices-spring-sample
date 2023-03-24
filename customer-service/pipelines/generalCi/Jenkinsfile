@@ -1,7 +1,7 @@
 @Library("jenkins-util")_
 
 generalCi(
-    branch: "boot-2.5.8-and-java-17-migration",
+    branch: "boot-3.0.X-migration",
     scmUrl: "git@github.com:Merdoc97/microservices-spring-sample.git",
     mavenModule: "customer-service/",
     pathToAppChart: "/infra/charts/customer-service",
