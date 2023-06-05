@@ -46,3 +46,6 @@ services:
     url: http://customer-service
     port: 8080
 profile: stdout
+datasource:
+  jdbcUrl: jdbc:postgresql://postgres-postgresql.infra:5432/test_migration
+  schema: public

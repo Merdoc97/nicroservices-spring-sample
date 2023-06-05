@@ -45,6 +45,8 @@ spec:
               value: {{.Values.services.accountService.url}}:{{.Values.services.accountService.port}}
             - name: CUSTOMER_SERVICE_URL
               value: {{.Values.services.customerService.url}}:{{.Values.services.customerService.port}}
+            - name: DB_MIGRATION
+              value: 'false'
           ports:
             - containerPort: {{.Values.port}}
       volumes:
