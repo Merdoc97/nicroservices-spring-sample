@@ -1,1 +1,0 @@
-insert into test_init_third(id, name) values (1,'test');

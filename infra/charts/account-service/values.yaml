@@ -13,7 +13,8 @@ role: ACTUATOR
 discoveryEnabled: true
 
 resources:
-  memory: 512Mi
+  memory: 256Mi
+  cpu: 200m
   java:
     opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
 actuator:

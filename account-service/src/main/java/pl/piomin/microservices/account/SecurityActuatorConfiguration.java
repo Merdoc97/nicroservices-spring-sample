@@ -28,11 +28,12 @@ public class SecurityActuatorConfiguration {
 
     @Bean
     SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http
+        http.securityMatcher(actuatorPath+"/**")
 
                 //filtering to basic authorization allowed only for actuator
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(actuatorPath + "/health").permitAll()
+                        .requestMatchers(actuatorPath + "/prometheus").permitAll()
                         .requestMatchers(actuatorPath + "/**").hasAnyRole(actuatorRole)
                         .requestMatchers("/instances/**").hasAnyRole(actuatorRole)
                         .anyRequest().denyAll()

@@ -13,7 +13,8 @@ role: ACTUATOR
 discoveryEnabled: true
 
 resources:
-  memory: 512Mi
+  memory: 256Mi
+  cpu: 200m
   java:
     opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
 actuator:
@@ -43,3 +44,8 @@ feign:
     serviceName: account-service
     port: 8080
 profile: stdout
+scaling:
+  minReplicas: 1
+  maxReplicas: 5
+  cpu:
+    utilization: 50
