@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: account-service
+  security:
+    user:
+      name: user
+      password: password
+      roles: ACTUATOR
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
+    discovery:
+      enabled: true
+  rabbitmq:
+    host: rabbit.infra
+    username: user
+    password: password
+    port: 5672
+  zipkin:
+    compression:
+      enabled: true
+    base-url: http://zipkin.infra:9411
+    enabled: true
+    service:
+      name: ${spring.application.name}
+    sender:
+      type: rabbit
+    encoder: json_v2
+  sleuth:
+    sampler:
+      probability: 1.0
+    messaging:
+      enabled: true
+      rabbit:
+        enabled: true

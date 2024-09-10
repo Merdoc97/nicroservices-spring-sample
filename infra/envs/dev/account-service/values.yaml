@@ -1,0 +1,16 @@
+global:
+  dockerRegistryUrl: localhost:5000
+  namespace: microservice
+  image: account-service
+  imageVersion: 0.0.21
+  application:
+   ingress:
+     rewriteTarget: /$2
+     targetPath: /account(/|$)(.*)
+     annotations:
+       nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "5"
+   name: account-service
+   deployment:
+     configMapRefs:
+       - account-config
+

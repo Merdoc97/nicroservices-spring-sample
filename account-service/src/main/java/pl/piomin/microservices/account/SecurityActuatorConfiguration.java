@@ -33,6 +33,7 @@ public class SecurityActuatorConfiguration {
                 //filtering to basic authorization allowed only for actuator
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(actuatorPath + "/health").permitAll()
+                        .requestMatchers(actuatorPath + "/health/**").permitAll()
                         .requestMatchers(actuatorPath + "/prometheus").permitAll()
                         .requestMatchers(actuatorPath + "/**").hasAnyRole(actuatorRole)
                         .requestMatchers("/instances/**").hasAnyRole(actuatorRole)

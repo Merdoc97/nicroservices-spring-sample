@@ -1,0 +1,12 @@
+apiVersion: v2
+name: account-chart
+description: A chart for account service
+kubeVersion: '>=1.15.3'
+type: application
+appVersion: 0.0.5
+version: 0.0.1
+#please use for update dependencies  helm dependencies update envs/dev/account-service
+dependencies:
+  - name: base-chart
+    version: 0.0.1
+    repository: "file://../../../charts/base-chart"

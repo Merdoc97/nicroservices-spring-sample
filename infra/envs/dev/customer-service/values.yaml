@@ -1,0 +1,21 @@
+global:
+  dockerRegistryUrl: localhost:5000
+  namespace: microservice
+  image: customer-service
+  imageVersion: 0.0.12
+  datasource:
+    migration:
+      enabled: "false"
+  hpa:
+    enabled: "false"
+    minReplicas: 1
+    maxReplicas: 2
+  application:
+   ingress:
+     rewriteTarget: /$2
+     targetPath: /customer(/|$)(.*)
+   name: customer-service
+   deployment:
+     configMapRefs:
+       - customer-config
+
