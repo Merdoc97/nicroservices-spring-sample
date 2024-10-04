@@ -2,13 +2,29 @@ global:
   dockerRegistryUrl: localhost:5000
   namespace: microservice
   image: account-service
-  imageVersion: 0.0.21
+  imageVersion: 0.0.37
   application:
+   volumeMounts:
+      - mountPath: /tmp
+        name: checkpoint
+   volumes:
+      - name: checkpoint
+        persistentVolumeClaim:
+          claimName: account-service-volume
+   resources:
+      java:
+        opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
    ingress:
      rewriteTarget: /$2
      targetPath: /account(/|$)(.*)
      annotations:
+       #retry on ingress level
        nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "5"
+       #rate limiter on ingress level
+       #to change status code please add
+       #limit-req-status-code: '429' in to data: property on ingress configmap
+       nginx.ingress.kubernetes.io/limit-rps: "10"
+       nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504 http_429"
    name: account-service
    deployment:
      configMapRefs:

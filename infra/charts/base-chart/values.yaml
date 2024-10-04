@@ -36,6 +36,8 @@ global:
       secretRefs: {}
       configMapRefs: {}
   application:
+    volumeMounts: {}
+    volumes: {}
     name:
     port: 8080
     labels: {}
@@ -45,7 +47,7 @@ global:
       rewriteTarget: /$2
       targetPath:
       annotations:
-        nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
+        nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504 http_429"
         nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "3"
     prometheus:
       actuatorPath: /actuator/prometheus

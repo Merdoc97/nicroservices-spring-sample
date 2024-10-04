@@ -3,6 +3,6 @@ name: base-chart
 description: A Base chart for spring boot applications
 kubeVersion: '>=1.15.3'
 type: application
-appVersion: 0.0.1
+appVersion: "0.0.1"
 version: 0.0.1
 dependencies: []

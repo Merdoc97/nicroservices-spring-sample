@@ -12,4 +12,4 @@ COPY --from=JAR_EXTRACT /application/dependencies ./
 COPY --from=JAR_EXTRACT /application/spring-boot-loader ./
 COPY --from=JAR_EXTRACT /application/snapshot-dependencies ./
 COPY --from=JAR_EXTRACT /application/application ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
