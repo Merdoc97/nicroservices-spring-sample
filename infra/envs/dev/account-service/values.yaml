@@ -2,7 +2,7 @@ global:
   dockerRegistryUrl: localhost:5000
   namespace: microservice
   image: account-service
-  imageVersion: 0.0.37
+  imageVersion: 0.0.40
   application:
    volumeMounts:
       - mountPath: /tmp
@@ -14,6 +14,8 @@ global:
    resources:
       java:
         opts: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=70.0 -XX:+ExitOnOutOfMemoryError"
+      limits:
+        memory: 512Mi
    ingress:
      rewriteTarget: /$2
      targetPath: /account(/|$)(.*)
@@ -29,4 +31,5 @@ global:
    deployment:
      configMapRefs:
        - account-config
+
 

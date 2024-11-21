@@ -4,7 +4,8 @@ server:
   port: ${PORT:3334}
 
 spring:
-
+  profiles:
+    include: stash
   application:
     name: account-service
   security:
@@ -13,6 +14,9 @@ spring:
       password: password
       roles: ACTUATOR
   cloud:
+    openfeign:
+      micrometer:
+        enabled: true
     kubernetes:
       reload:
         enabled: true
@@ -25,39 +29,22 @@ spring:
     username: user
     password: password
     port: 5672
-  zipkin:
-    compression:
-      enabled: true
-    base-url: http://localhost:9411
-    enabled: true
-    service:
-      name: ${spring.application.name}
-    sender:
-      type: rabbit
-    encoder: json_v2
-  sleuth:
-    sampler:
-      probability: 1.0
-    messaging:
-      enabled: true
-      rabbit:
-        enabled: true
-
-ribbon:
-  eureka:
-    enabled: true
-
 management:
+  tracing:
+    sampling:
+      probability: 1
+    propagation:
+      type: b3_multi
+      consume: b3_multi
+    enabled: true
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+
+
+
   endpoints:
     web:
       exposure:
         #      new feature most endpoints from http layer not allowed
         include: "*"
-  endpoint:
-    hystrix:
-      stream:
-        enabled: false
-
-feign:
-  hystrix:
-    enabled: true

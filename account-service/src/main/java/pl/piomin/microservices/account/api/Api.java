@@ -1,23 +1,25 @@
 package pl.piomin.microservices.account.api;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piomin.microservices.account.exceptions.AccountNotFoundException;
 import pl.piomin.microservices.account.model.Account;
+import pl.piomin.microservices.account.service.AccountService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
 @Slf4j
 public class Api {
     private final List<Account> accounts = new ArrayList<>();
-
+    @Autowired
+    private AccountService accountService;
     public Api() {
         accounts.add(new Account(1, 1, "111111"));
         accounts.add(new Account(2, 2, "222222"));
@@ -40,9 +42,7 @@ public class Api {
     @GetMapping("/customer/{customer}")
     public List<Account> findByCustomer(@PathVariable("customer") Integer customerId) {
         log.info(String.format("Account.findByCustomer(%s)", customerId));
-        return accounts.stream()
-                .filter(it -> it.getCustomerId().intValue() == customerId.intValue())
-                .collect(Collectors.toList());
+        return accountService.findByCustomer(accounts,customerId);
     }
 
     @GetMapping("/")

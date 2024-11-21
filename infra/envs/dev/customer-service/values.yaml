@@ -2,7 +2,7 @@ global:
   dockerRegistryUrl: localhost:5000
   namespace: microservice
   image: customer-service
-  imageVersion: 0.0.12
+  imageVersion: 0.0.40
   datasource:
     migration:
       enabled: "false"
@@ -11,6 +11,9 @@ global:
     minReplicas: 1
     maxReplicas: 2
   application:
+   resources:
+     limits:
+       memory: 512Mi
    ingress:
      rewriteTarget: /$2
      targetPath: /customer(/|$)(.*)

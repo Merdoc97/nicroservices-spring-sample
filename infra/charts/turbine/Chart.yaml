@@ -1,8 +1,0 @@
-apiVersion: v2
-name: turbine
-description: A Helm chart for Turbine Service
-kubeVersion: '>=1.15.3'
-type: application
-version: 0.0.1
-appVersion: 0.0.1
-dependencies: []
